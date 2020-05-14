@@ -5,6 +5,9 @@
 **/Releas.win32/
 **/.vs/
 
+# Additional resources
+**/AdditionalResources/
+
 # Build and Project output Mac
 **/DerivedData/
 **/xcuserdata/

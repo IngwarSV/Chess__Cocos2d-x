@@ -29,7 +29,7 @@
 
 /* perform tests for game logic 
 (please define PERFORM_TESTS in NewGameScene.cpp to show tests results)*/
-//#define PERFORM_TESTS 1
+#define PERFORM_TESTS 1
 
 #define USE_AUDIO_ENGINE 1
 //#define USE_SIMPLE_AUDIO_ENGINE 1
