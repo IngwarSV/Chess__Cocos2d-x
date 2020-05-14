@@ -214,6 +214,7 @@ void NewGameScene::processEvent(cocos2d::Vec2 location)
 void NewGameScene::onMouseDown(Event* event)
 {
 	processEvent(dynamic_cast<EventMouse*>(event)->getLocationInView());
+	event->stopPropagation();
 }
 
 void NewGameScene::onSaveGameClick(cocos2d::Ref* sender)

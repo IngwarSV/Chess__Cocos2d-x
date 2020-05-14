@@ -5,19 +5,11 @@ using namespace cocos2d::experimental;
 
 
 bool Core::init() {
-	// creating Board[8][8]
-	this->_board = new Figure * *[BOARD_SIZE];
+	// creating Board[8][8] with nullptrs
 	for (int i = 0; i < BOARD_SIZE; ++i) {
-		_board[i] = new Figure * [BOARD_SIZE];
+		_board.push_back(std::vector<Figure*>(BOARD_SIZE));
 	}
-
-	//Setting board with nullptrs
-	for (int i = 0; i < BOARD_SIZE; ++i) {
-		for (int j = 0; j < BOARD_SIZE; ++j) {
-			_board[i][j] = nullptr;
-		}
-	}
-
+	
 	auto spritecache = SpriteFrameCache::getInstance();
 
 	spritecache->addSpriteFramesWithFile("Images.plist", "Images.png");
@@ -407,7 +399,7 @@ bool Core::processEvent(Location newLocation)
 
 	// checking if figureToMove can execute command
 	bool moveIsLegal = false;
-	auto v_possibleMoves = _figureToMove->getPossibleMoves(_board);
+	auto v_possibleMoves = _figureToMove->getPossibleMoves(&_board);
 
 	for (auto possiblePosition : *v_possibleMoves) {
 		if (newLocation == possiblePosition) {
@@ -645,8 +637,6 @@ void Core::deletingFigure(Figure* enemyFigure)
 	enemyFigure->removeFromParent();
 	(enemyFigure->getFigureColor() == Color::BLACK) ?
 		_blackArmy.eraseObject(enemyFigure) : _whiteArmy.eraseObject(enemyFigure);
-	
-	enemyFigure->autorelease();
 }
 
 void Core::arrangePromotion(Figure* figureToMove)
@@ -855,7 +845,7 @@ bool Core::isCheck()
 	const Location kingPosition = _activeKing->getLocation();
 
 	for (auto enemyFigure : *_enemyArmy) {
-		auto v_possibleMoves = enemyFigure->getPossibleMoves(_board);
+		auto v_possibleMoves = enemyFigure->getPossibleMoves(&_board);
 
 		for (auto possiblePosition : *v_possibleMoves) {
 			if (kingPosition == possiblePosition) {
@@ -872,7 +862,7 @@ bool Core::isCheckmate()
 	Location kingLocation = _activeKing->getLocation();
 
 	// checking if king can escape check by himself
-	auto v_possibleMoves = _activeKing->getPossibleMoves(_board);
+	auto v_possibleMoves = _activeKing->getPossibleMoves(&_board);
 
 	for (auto possiblePosition : *v_possibleMoves) {
 		if (!isKingInDanger(_activeKing, kingLocation, possiblePosition)) {
@@ -886,7 +876,7 @@ bool Core::isCheckmate()
 	(test using king's moves is repeating, but mostly this second check won't be performed)*/
 
 	for (auto figure : *_currentArmy) {
-		auto v_possibleMoves = figure->getPossibleMoves(_board);
+		auto v_possibleMoves = figure->getPossibleMoves(&_board);
 		Location figureLocation = figure->getLocation();
 
 		for (auto possiblePosition : *v_possibleMoves) {
@@ -919,7 +909,7 @@ bool Core::isDraw()
 	bool hasLegalMove = false;
 
 	for (auto figure : *_currentArmy) {
-		auto v_possibleMoves = figure->getPossibleMoves(_board);
+		auto v_possibleMoves = figure->getPossibleMoves(&_board);
 		Location figureLocation = figure->getLocation();
 
 		for (auto possiblePosition : *v_possibleMoves) {

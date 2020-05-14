@@ -32,14 +32,6 @@ private:
 	cocos2d::Sprite* _whiteKingIcon = nullptr;
 	cocos2d::Sprite* _blackKingIcon = nullptr;
 
-
-
-	
-	
-	
-
-	void deleteCustomData();
-
 	std::string createFigureDataString(Figure* figureToDeploy, Location boardLocation);
 
 public:
@@ -64,6 +56,4 @@ public:
 	void onGameSettingsClick(cocos2d::Ref* sender);
 
 	void onQuitGameClick(cocos2d::Ref* sender);
-
-
 };

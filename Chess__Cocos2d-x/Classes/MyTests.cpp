@@ -293,5 +293,4 @@ void MyTests::runCoreTests()
         _core->_testsResults.back() += "0";
     }
     _core->clearData();
-    _core->initialSetup();
 }

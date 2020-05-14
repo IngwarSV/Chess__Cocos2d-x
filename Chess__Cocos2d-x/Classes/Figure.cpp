@@ -16,7 +16,7 @@ bool Figure::init()
 	return false;
 }
 
-std::vector<Location>* Figure::getPossibleMoves(Figure*** board)
+std::vector<Location>* Figure::getPossibleMoves(std::vector < std::vector<Figure*>>* board)
 {
 	return &_possibleMoves;
 }

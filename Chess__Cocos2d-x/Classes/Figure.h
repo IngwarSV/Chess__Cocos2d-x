@@ -28,7 +28,7 @@ public:
 // methods
 	/*virtual method, returns vector of figure's possible moves, 
 	considering situation on the board*/
-	virtual std::vector<Location>* getPossibleMoves(Figure*** board);
+	virtual std::vector<Location>* getPossibleMoves(std::vector < std::vector<Figure*>>* board);
 	
 	//getters
 	const Color getFigureColor() const;

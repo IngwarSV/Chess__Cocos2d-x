@@ -13,7 +13,7 @@ public:
 
 	CREATE_FUNC(F_King);
 
-	std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	std::vector<Location>* getPossibleMoves(std::vector < std::vector<Figure*>>* board) override;
 };
 
 
@@ -25,7 +25,7 @@ public:
 
 	CREATE_FUNC(F_Queen);
 
-	std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	std::vector<Location>* getPossibleMoves(std::vector < std::vector<Figure*>>* board) override;
 };
 
 
@@ -37,7 +37,7 @@ public:
 
 	CREATE_FUNC(F_Bishop);
 
-	std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	std::vector<Location>* getPossibleMoves(std::vector < std::vector<Figure*>>* board) override;
 };
 
 
@@ -49,7 +49,7 @@ public:
 
 	CREATE_FUNC(F_Knight);
 
-	std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	std::vector<Location>* getPossibleMoves(std::vector < std::vector<Figure*>>* board) override;
 };
 
 
@@ -61,7 +61,7 @@ public:
 
 	CREATE_FUNC(F_Rook);
 
-	std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	std::vector<Location>* getPossibleMoves(std::vector < std::vector<Figure*>>* board) override;
 
 };
 
@@ -74,5 +74,5 @@ public:
 
 	CREATE_FUNC(F_Pawn);
 
-	std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	std::vector<Location>* getPossibleMoves(std::vector < std::vector<Figure*>>* board) override;
 };

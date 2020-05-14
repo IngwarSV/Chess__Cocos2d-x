@@ -20,7 +20,8 @@ class Core {
 private:
 // attributes
 	// Board[SIZE][SIZE], BOARD_SIZE = 8;
-	Figure*** _board;
+	std::vector < std::vector<Figure*>> _board;
+	//Figure*** _board;
 
 	// sets for "White" and "Black" armies and pointers on them
 	cocos2d::Vector<Figure*> _whiteArmy = cocos2d::Vector<Figure*>(16);

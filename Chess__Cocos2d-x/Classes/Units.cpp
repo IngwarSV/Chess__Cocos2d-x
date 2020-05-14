@@ -31,7 +31,7 @@ bool F_King::init()
 	return true;
 }
 
-std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
+std::vector<Location>* F_King::getPossibleMoves(std::vector < std::vector<Figure*>>* board)
 {
 	// clearing vector every turn
 	_possibleMoves.clear();
@@ -41,7 +41,7 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 	tempLocation.x -= 1;
 
 	if (tempLocation.x >= 0) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -55,7 +55,7 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 	tempLocation.x += 1;
 
 	if (tempLocation.x < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -70,7 +70,7 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 1;
 
 	if (tempLocation.y >= 0) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -84,7 +84,7 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 	tempLocation.y += 1;
 
 	if (tempLocation.y < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -100,7 +100,7 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 	tempLocation.y += 1;
 
 	if (tempLocation.x >= 0 && tempLocation.y < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -115,7 +115,7 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 	tempLocation.y += 1;
 
 	if (tempLocation.x < BOARD_SIZE && tempLocation.y < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -131,7 +131,7 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 1;
 
 	if (tempLocation.x >= 0 && tempLocation.y >= 0) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -146,7 +146,7 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 1;
 
 	if (tempLocation.x < BOARD_SIZE && tempLocation.y >= 0) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -190,7 +190,7 @@ bool F_Queen::init()
 }
 
 
-std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
+std::vector<Location>* F_Queen::getPossibleMoves(std::vector < std::vector<Figure*>>* board)
 {
 	// clearing vector every turn
 	_possibleMoves.clear();
@@ -199,7 +199,7 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 	Location tempLocation = this->getLocation();
 
 	for (tempLocation.x += 1; tempLocation.x < BOARD_SIZE; ++tempLocation.x) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -217,7 +217,7 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 	tempLocation = this->getLocation();
 
 	for (tempLocation.x -= 1; tempLocation.x >= 0; --tempLocation.x) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -236,7 +236,7 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 	tempLocation = this->getLocation();
 
 	for (tempLocation.y += 1; tempLocation.y < BOARD_SIZE; ++tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -254,7 +254,7 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 	tempLocation = this->getLocation();
 
 	for (tempLocation.y -= 1; tempLocation.y >= 0; --tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -275,7 +275,7 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 	tempLocation.y += 1;
 
 	for (; tempLocation.x >= 0 && tempLocation.y < BOARD_SIZE; --tempLocation.x, ++tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -295,7 +295,7 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 	tempLocation.y += 1;
 
 	for (; tempLocation.x < BOARD_SIZE && tempLocation.y < BOARD_SIZE; ++tempLocation.x, ++tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -316,7 +316,7 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 1;
 
 	for (; tempLocation.x >= 0 && tempLocation.y >= 0; --tempLocation.x, --tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -336,7 +336,7 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 1;
 
 	for (; tempLocation.x < BOARD_SIZE && tempLocation.y >= 0; ++tempLocation.x, --tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -385,7 +385,7 @@ bool F_Bishop::init()
 	return true;
 }
 
-std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
+std::vector<Location>* F_Bishop::getPossibleMoves(std::vector < std::vector<Figure*>>* board)
 {
 	// clearing vector every turn
 	_possibleMoves.clear();
@@ -396,7 +396,7 @@ std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 	tempLocation.y += 1;
 
 	for (; tempLocation.x >= 0 && tempLocation.y < BOARD_SIZE; --tempLocation.x, ++tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -416,7 +416,7 @@ std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 	tempLocation.y += 1;
 
 	for (; tempLocation.x < BOARD_SIZE && tempLocation.y < BOARD_SIZE; ++tempLocation.x, ++tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -437,7 +437,7 @@ std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 1;
 
 	for (; tempLocation.x >= 0 && tempLocation.y >= 0; --tempLocation.x, --tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -457,7 +457,7 @@ std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 1;
 
 	for (; tempLocation.x < BOARD_SIZE && tempLocation.y >= 0; ++tempLocation.x, --tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -506,7 +506,7 @@ bool F_Knight::init()
 	return true;
 }
 
-std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
+std::vector<Location>* F_Knight::getPossibleMoves(std::vector < std::vector<Figure*>>* board)
 {
 	// clearing vector every turn
 	_possibleMoves.clear();
@@ -517,7 +517,7 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 1;
 
 	if (tempLocation.x >= 0 && tempLocation.y >= 0) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -532,7 +532,7 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 	tempLocation.y += 1;
 
 	if (tempLocation.x >= 0 && tempLocation.y < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -548,7 +548,7 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 1;
 
 	if (tempLocation.x < BOARD_SIZE && tempLocation.y >= 0) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -563,7 +563,7 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 	tempLocation.y += 1;
 
 	if (tempLocation.x < BOARD_SIZE && tempLocation.y < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -579,7 +579,7 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 2;
 
 	if (tempLocation.x >= 0 && tempLocation.y >= 0) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -594,7 +594,7 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 	tempLocation.y -= 2;
 
 	if (tempLocation.x < BOARD_SIZE && tempLocation.y >= 0) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -610,7 +610,7 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 	tempLocation.y += 2;
 
 	if (tempLocation.x < BOARD_SIZE && tempLocation.y < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -625,7 +625,7 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 	tempLocation.y += 2;
 
 	if (tempLocation.x >= 0 && tempLocation.y < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -668,7 +668,7 @@ bool F_Rook::init()
 	return true;
 }
 
-std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
+std::vector<Location>* F_Rook::getPossibleMoves(std::vector < std::vector<Figure*>>* board)
 {
 	// clearing vector every turn
 	_possibleMoves.clear();
@@ -677,7 +677,7 @@ std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 	Location tempLocation = this->getLocation();
 
 	for (tempLocation.x += 1; tempLocation.x < BOARD_SIZE; ++tempLocation.x) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -695,7 +695,7 @@ std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 	tempLocation = this->getLocation();
 
 	for (tempLocation.x -= 1; tempLocation.x >= 0; --tempLocation.x) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -714,7 +714,7 @@ std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 	tempLocation = this->getLocation();
 
 	for (tempLocation.y += 1; tempLocation.y < BOARD_SIZE; ++tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -732,7 +732,7 @@ std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 	tempLocation = this->getLocation();
 
 	for (tempLocation.y -= 1; tempLocation.y >= 0; --tempLocation.y) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -781,7 +781,7 @@ bool F_Pawn::init()
 }
 
 
-std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
+std::vector<Location>* F_Pawn::getPossibleMoves(std::vector < std::vector<Figure*>>* board)
 {
 	// clearing vector every turn
 	_possibleMoves.clear();
@@ -793,7 +793,7 @@ std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
 	tempLocation.x += delta;
 
 	if (tempLocation.x >= 0 && tempLocation.x < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
 			_possibleMoves.push_back(tempLocation);
@@ -801,11 +801,11 @@ std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
 	}
 
 	if (this->_firstMove) {
-		const Figure* figure1 = board[tempLocation.x][tempLocation.y];
+		const Figure* figure1 = (*board)[tempLocation.x][tempLocation.y];
 
 		tempLocation.x += delta;
 		if (tempLocation.x >= 0 && tempLocation.x < BOARD_SIZE) {
-			const Figure* figure2 = board[tempLocation.x][tempLocation.y];
+			const Figure* figure2 = (*board)[tempLocation.x][tempLocation.y];
 
 			if (!figure1 && !figure2) {
 				_possibleMoves.push_back(tempLocation);
@@ -820,7 +820,7 @@ std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
 
 	if (tempLocation.x >= 0 && tempLocation.x < BOARD_SIZE &&
 		tempLocation.y >= 0 && tempLocation.y < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (figure) {
 			if (figure->getFigureColor() != this->getFigureColor()) {
@@ -835,7 +835,7 @@ std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
 
 	if (tempLocation.x >= 0 && tempLocation.x < BOARD_SIZE &&
 		tempLocation.y >= 0 && tempLocation.y < BOARD_SIZE) {
-		const Figure* figure = board[tempLocation.x][tempLocation.y];
+		const Figure* figure = (*board)[tempLocation.x][tempLocation.y];
 
 		if (figure) {
 			if (figure->getFigureColor() != this->getFigureColor()) {

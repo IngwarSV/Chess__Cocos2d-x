@@ -8,32 +8,6 @@ namespace fs = std::filesystem;
 using namespace DEF_SETT;
 
 
-
-void CustomGameScene::deleteCustomData()
-{
-	_pullBoardFigure = nullptr;
-	_existingBoardFigure = nullptr;
-	_WKing = nullptr;
-	_BKing = nullptr;
-	// deleting current figures
-	int counter = 0;
-	for (auto figure : _pullBoard) {
-		if (counter == 4 || counter == 10) {
-			counter += 1;
-			continue;
-		}
-
-		auto parent = figure->getParent();
-		if (parent) {
-			parent->removeChild(figure);
-		}
-		figure->autorelease();
-
-		counter += 1;
-	}
-	_pullBoard.clear();
-}
-
 std::string CustomGameScene::createFigureDataString(Figure* figureToDeploy, Location boardLocation)
 {
 	std::string col_type_loc = figureToDeploy->getFigureName();
@@ -389,7 +363,6 @@ void CustomGameScene::onPlayGameClick(cocos2d::Ref* sender)
 	}
 	bArmyDataString += "\n";
 	
-	deleteCustomData();
 	_core->loadData(gameDataString, wArmyDataString, bArmyDataString, CustomGameLoadedString);
 	this->pause();
 	AudioEngine::stop(_layerMusicID);
