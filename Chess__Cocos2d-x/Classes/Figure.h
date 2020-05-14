@@ -11,22 +11,24 @@ class Figure : public cocos2d::Sprite
 {
 protected:
 // attributes
-	Color _color;
-	Type _type;
+	Color _color = Color::NONE;
+	Type _type = Type::NONE;
 	std::string _name;
 	Location _location;
-	std::vector<Location>* _possibleMoves = nullptr;
+	std::vector<Location> _possibleMoves;
 
 public:
-	Figure(Color color, Location location, Type type);
-	virtual ~Figure();
+	virtual bool init() override;
+
+	CREATE_FUNC(Figure);
+
 // attributes
-	bool _firstMove;
+	bool _firstMove = true;
 
 // methods
-	/*pure virtual method, returns vector of figure's possible moves, 
+	/*virtual method, returns vector of figure's possible moves, 
 	considering situation on the board*/
-	virtual std::vector<Location>* getPossibleMoves(Figure*** board) = 0;
+	virtual std::vector<Location>* getPossibleMoves(Figure*** board);
 	
 	//getters
 	const Color getFigureColor() const;

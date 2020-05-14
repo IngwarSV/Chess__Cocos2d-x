@@ -2,20 +2,39 @@
 using namespace cocos2d;
 using namespace DEF_SETT;
 
-F_King::F_King(Color color, Location location, Type type) : Figure(color, location, type) {}
+F_King* F_King::createFigure(Color color, Location location, Type type)
+{
+	auto figure = F_King::create();
 
-F_King::~F_King() {
-	Director::getInstance()->getActionManager()->removeAllActionsFromTarget(this);
-	if (this->getParent())
+	figure->_color = color;
+	figure->_type = type;
+	figure->_name += static_cast<char>(color);
+	figure->_name += static_cast<char>(type);
+	figure->_location = location;
+	figure->_firstMove = true;
+	figure->setSpriteFrame(figure->_name + "_Pas.png");
+	figure->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+	figure->setPosition(static_cast<float>(BOARD_X + location.y * SQUARE_SIZE),
+			static_cast<float>(BOARD_Y + location.x * SQUARE_SIZE));
+	figure->setVisible(true);
+
+	return figure;
+}
+
+bool F_King::init()
+{
+	if (!Figure::init())
 	{
-		this->getParent()->removeChild(this);
+		return false;
 	}
+
+	return true;
 }
 
 std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 {
 	// clearing vector every turn
-	_possibleMoves->clear();
+	_possibleMoves.clear();
 
 	//"vertical" moves
 	Location tempLocation = this->getLocation();
@@ -25,10 +44,10 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -39,10 +58,10 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -54,10 +73,10 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -68,10 +87,10 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -84,10 +103,10 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -99,10 +118,10 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -115,10 +134,10 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -130,31 +149,51 @@ std::vector<Location>* F_King::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
-	return _possibleMoves;
+	return &_possibleMoves;
 }
 
 
-F_Queen::F_Queen(Color color, Location location, Type type) : Figure(color, location, type) {}
+F_Queen* F_Queen::createFigure(Color color, Location location, Type type)
+{
+	auto figure = F_Queen::create();
 
-F_Queen::~F_Queen() {
-	Director::getInstance()->getActionManager()->removeAllActionsFromTarget(this);
-	if (this->getParent())
+	figure->_color = color;
+	figure->_type = type;
+	figure->_name += static_cast<char>(color);
+	figure->_name += static_cast<char>(type);
+	figure->_location = location;
+	figure->_firstMove = true;
+	figure->setSpriteFrame(figure->_name + "_Pas.png");
+	figure->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+	figure->setPosition(static_cast<float>(BOARD_X + location.y * SQUARE_SIZE),
+		static_cast<float>(BOARD_Y + location.x * SQUARE_SIZE));
+	figure->setVisible(true);
+
+	return figure;
+}
+
+bool F_Queen::init()
+{
+	if (!Figure::init())
 	{
-		this->getParent()->removeChild(this);
+		return false;
 	}
+
+	return true;
 }
+
 
 std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 {
 	// clearing vector every turn
-	_possibleMoves->clear();
+	_possibleMoves.clear();
 
 	//vertical moves
 	Location tempLocation = this->getLocation();
@@ -163,10 +202,10 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -181,10 +220,10 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -200,10 +239,10 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -218,10 +257,10 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -239,10 +278,10 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -259,10 +298,10 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -280,10 +319,10 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -300,10 +339,10 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -312,24 +351,44 @@ std::vector<Location>* F_Queen::getPossibleMoves(Figure*** board)
 		}
 	}
 
-	return _possibleMoves;
+	return &_possibleMoves;
 }
 
 
-F_Bishop::F_Bishop(Color color, Location location, Type type) : Figure(color, location, type) {}
 
-F_Bishop::~F_Bishop() {
-	Director::getInstance()->getActionManager()->removeAllActionsFromTarget(this);
-	if (this->getParent())
+F_Bishop* F_Bishop::createFigure(Color color, Location location, Type type)
+{
+	auto figure = F_Bishop::create();
+
+	figure->_color = color;
+	figure->_type = type;
+	figure->_name += static_cast<char>(color);
+	figure->_name += static_cast<char>(type);
+	figure->_location = location;
+	figure->_firstMove = true;
+	figure->setSpriteFrame(figure->_name + "_Pas.png");
+	figure->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+	figure->setPosition(static_cast<float>(BOARD_X + location.y * SQUARE_SIZE),
+		static_cast<float>(BOARD_Y + location.x * SQUARE_SIZE));
+	figure->setVisible(true);
+
+	return figure;
+}
+
+bool F_Bishop::init()
+{
+	if (!Figure::init())
 	{
-		this->getParent()->removeChild(this);
+		return false;
 	}
+
+	return true;
 }
 
 std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 {
 	// clearing vector every turn
-	_possibleMoves->clear();
+	_possibleMoves.clear();
 
 	//right diagonal moves
 	Location tempLocation = this->getLocation();
@@ -340,10 +399,10 @@ std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -360,10 +419,10 @@ std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -381,10 +440,10 @@ std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -401,10 +460,10 @@ std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -413,25 +472,44 @@ std::vector<Location>* F_Bishop::getPossibleMoves(Figure*** board)
 		}
 	}
 
-	return _possibleMoves;
+	return &_possibleMoves;
 }
 
 
 
-F_Knight::F_Knight(Color color, Location location, Type type) : Figure(color, location, type) {}
+F_Knight* F_Knight::createFigure(Color color, Location location, Type type)
+{
+	auto figure = F_Knight::create();
 
-F_Knight::~F_Knight() {
-	Director::getInstance()->getActionManager()->removeAllActionsFromTarget(this);
-	if (this->getParent())
+	figure->_color = color;
+	figure->_type = type;
+	figure->_name += static_cast<char>(color);
+	figure->_name += static_cast<char>(type);
+	figure->_location = location;
+	figure->_firstMove = true;
+	figure->setSpriteFrame(figure->_name + "_Pas.png");
+	figure->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+	figure->setPosition(static_cast<float>(BOARD_X + location.y * SQUARE_SIZE),
+		static_cast<float>(BOARD_Y + location.x * SQUARE_SIZE));
+	figure->setVisible(true);
+
+	return figure;
+}
+
+bool F_Knight::init()
+{
+	if (!Figure::init())
 	{
-		this->getParent()->removeChild(this);
+		return false;
 	}
+
+	return true;
 }
 
 std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 {
 	// clearing vector every turn
-	_possibleMoves->clear();
+	_possibleMoves.clear();
 
 	//"vertical" up moves
 	Location tempLocation = this->getLocation();
@@ -442,10 +520,10 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -457,10 +535,10 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -473,10 +551,10 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -488,10 +566,10 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -504,10 +582,10 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -519,10 +597,10 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -535,10 +613,10 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -550,31 +628,50 @@ std::vector<Location>* F_Knight::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
-	return _possibleMoves;
+	return &_possibleMoves;
 }
 
 
-F_Rook::F_Rook(Color color, Location location, Type type) : Figure(color, location, type) {}
+F_Rook* F_Rook::createFigure(Color color, Location location, Type type)
+{
+	auto figure = F_Rook::create();
 
-F_Rook::~F_Rook() {
-	Director::getInstance()->getActionManager()->removeAllActionsFromTarget(this);
-	if (this->getParent())
+	figure->_color = color;
+	figure->_type = type;
+	figure->_name += static_cast<char>(color);
+	figure->_name += static_cast<char>(type);
+	figure->_location = location;
+	figure->_firstMove = true;
+	figure->setSpriteFrame(figure->_name + "_Pas.png");
+	figure->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+	figure->setPosition(static_cast<float>(BOARD_X + location.y * SQUARE_SIZE),
+		static_cast<float>(BOARD_Y + location.x * SQUARE_SIZE));
+	figure->setVisible(true);
+
+	return figure;
+}
+
+bool F_Rook::init()
+{
+	if (!Figure::init())
 	{
-		this->getParent()->removeChild(this);
+		return false;
 	}
+
+	return true;
 }
 
 std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 {
 	// clearing vector every turn
-	_possibleMoves->clear();
+	_possibleMoves.clear();
 
 	//vertical moves
 	Location tempLocation = this->getLocation();
@@ -583,10 +680,10 @@ std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -601,10 +698,10 @@ std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -620,10 +717,10 @@ std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -638,10 +735,10 @@ std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 		else if (figure->getFigureColor() != this->getFigureColor()) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 
 			break;
 		}
@@ -650,24 +747,44 @@ std::vector<Location>* F_Rook::getPossibleMoves(Figure*** board)
 		}
 	}
 
-	return _possibleMoves;
+	return &_possibleMoves;
 }
 
 
-F_Pawn::F_Pawn(Color color, Location location, Type type) : Figure(color, location, type) {}
+F_Pawn* F_Pawn::createFigure(Color color, Location location, Type type)
+{
+	auto figure = F_Pawn::create();
 
-F_Pawn::~F_Pawn() {
-	Director::getInstance()->getActionManager()->removeAllActionsFromTarget(this);
-	if (this->getParent())
+	figure->_color = color;
+	figure->_type = type;
+	figure->_name += static_cast<char>(color);
+	figure->_name += static_cast<char>(type);
+	figure->_location = location;
+	figure->_firstMove = true;
+	figure->setSpriteFrame(figure->_name + "_Pas.png");
+	figure->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+	figure->setPosition(static_cast<float>(BOARD_X + location.y * SQUARE_SIZE),
+		static_cast<float>(BOARD_Y + location.x * SQUARE_SIZE));
+	figure->setVisible(true);
+
+	return figure;
+}
+
+bool F_Pawn::init()
+{
+	if (!Figure::init())
 	{
-		this->getParent()->removeChild(this);
+		return false;
 	}
+
+	return true;
 }
+
 
 std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
 {
 	// clearing vector every turn
-	_possibleMoves->clear();
+	_possibleMoves.clear();
 
 	int delta = (this->getFigureColor() == Color::WHITE) ? 1 : -1;
 	
@@ -679,7 +796,7 @@ std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
 		const Figure* figure = board[tempLocation.x][tempLocation.y];
 
 		if (!figure) {
-			_possibleMoves->push_back(tempLocation);
+			_possibleMoves.push_back(tempLocation);
 		}
 	}
 
@@ -691,7 +808,7 @@ std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
 			const Figure* figure2 = board[tempLocation.x][tempLocation.y];
 
 			if (!figure1 && !figure2) {
-				_possibleMoves->push_back(tempLocation);
+				_possibleMoves.push_back(tempLocation);
 			}
 		}
 	}
@@ -707,7 +824,7 @@ std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
 
 		if (figure) {
 			if (figure->getFigureColor() != this->getFigureColor()) {
-				_possibleMoves->push_back(tempLocation);
+				_possibleMoves.push_back(tempLocation);
 			}
 		}
 	}
@@ -722,10 +839,10 @@ std::vector<Location>* F_Pawn::getPossibleMoves(Figure*** board)
 
 		if (figure) {
 			if (figure->getFigureColor() != this->getFigureColor()) {
-				_possibleMoves->push_back(tempLocation);
+				_possibleMoves.push_back(tempLocation);
 			}
 		}
 	}
 
-	return _possibleMoves;
+	return &_possibleMoves;
 }

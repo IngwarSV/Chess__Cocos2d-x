@@ -7,54 +7,72 @@
 
 class F_King : public Figure {
 public:
-	F_King(Color color, Location location, Type type = Type::KING);
-	virtual ~F_King();
+	static F_King* createFigure(Color color, Location location, Type type = Type::KING);
 
-	virtual std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	virtual bool init();
+
+	CREATE_FUNC(F_King);
+
+	std::vector<Location>* getPossibleMoves(Figure*** board) override;
 };
 
 
 class F_Queen : public Figure {
 public:
-	F_Queen(Color color, Location location, Type type = Type::QUEEN);
-	virtual ~F_Queen();
+	static F_Queen* createFigure(Color color, Location location, Type type = Type::QUEEN);
 
-	virtual std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	virtual bool init();
+
+	CREATE_FUNC(F_Queen);
+
+	std::vector<Location>* getPossibleMoves(Figure*** board) override;
 };
 
 
 class F_Bishop : public Figure {
 public:
-	F_Bishop(Color color, Location location, Type type = Type::BISHOP);
-	virtual ~F_Bishop();
+	static F_Bishop* createFigure(Color color, Location location, Type type = Type::BISHOP);
 
-	virtual std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	virtual bool init();
+
+	CREATE_FUNC(F_Bishop);
+
+	std::vector<Location>* getPossibleMoves(Figure*** board) override;
 };
 
 
 class F_Knight : public Figure {
 public:
-	F_Knight(Color color, Location location, Type type = Type::KNIGHT);
-	virtual ~F_Knight();
+	static F_Knight* createFigure(Color color, Location location, Type type = Type::KNIGHT);
 
-	virtual std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	virtual bool init();
+
+	CREATE_FUNC(F_Knight);
+
+	std::vector<Location>* getPossibleMoves(Figure*** board) override;
 };
 
 
 class F_Rook : public Figure {
 public:
-	F_Rook(Color color, Location location, Type type = Type::ROOK);
-	virtual ~F_Rook();
+	static F_Rook* createFigure(Color color, Location location, Type type = Type::ROOK);
 
-	virtual std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	virtual bool init();
+
+	CREATE_FUNC(F_Rook);
+
+	std::vector<Location>* getPossibleMoves(Figure*** board) override;
 
 };
 
 
 class F_Pawn : public Figure {
 public:
-	F_Pawn(Color color, Location location, Type type = Type::PAWN);
-	virtual ~F_Pawn();
+	static F_Pawn* createFigure(Color color, Location location, Type type = Type::PAWN);
 
-	virtual std::vector<Location>* getPossibleMoves(Figure*** board) override;
+	virtual bool init();
+
+	CREATE_FUNC(F_Pawn);
+
+	std::vector<Location>* getPossibleMoves(Figure*** board) override;
 };

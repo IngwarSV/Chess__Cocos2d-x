@@ -49,19 +49,35 @@ bool QuitGameScene::init() {
 	buttonNO->setPosition(Vec2(winSize.width / 2 + SQUARE_SIZE, winSize.height / 2 - SQUARE_SIZE / 2));
 	
 	buttonYES->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
-		AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
-		_core->clearData();
-		AudioEngine::stop(_layerMusicID);
+		switch (type) {
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
+			_core->clearData();
+			AudioEngine::stop(_layerMusicID);
 
-		Director::getInstance()->popToRootScene();
+			Director::getInstance()->popToRootScene();
+			break;
+		default:
+			break;
+		}
 	});
 	
 	buttonNO->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
-		AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
-		AudioEngine::stop(_layerMusicID);
-		_core->startTurnDurationCount();
+		switch (type) {
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
+			AudioEngine::stop(_layerMusicID);
+			_core->startTurnDurationCount();
 
-		Director::getInstance()->popScene();
+			Director::getInstance()->popScene();
+			break;
+		default:
+			break;
+		}	
 	});
 
 	this->addChild(buttonYES, 2);

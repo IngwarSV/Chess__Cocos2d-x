@@ -27,7 +27,7 @@ void CustomGameScene::deleteCustomData()
 		if (parent) {
 			parent->removeChild(figure);
 		}
-		delete figure;
+		figure->autorelease();
 
 		counter += 1;
 	}
@@ -77,21 +77,21 @@ bool CustomGameScene::init() {
 	this->addChild(pullDesk, 1);
 
 
-	auto whiteQueen = new F_Queen(Color::WHITE, WQ_INIT_POS);
-	auto blackQueen = new F_Queen(Color::BLACK, BQ_INIT_POS);
+	auto whiteQueen = F_Queen::createFigure(Color::WHITE, WQ_INIT_POS);
+	auto blackQueen = F_Queen::createFigure(Color::BLACK, BQ_INIT_POS);
 	
-	_pullBoard.pushBack(new F_Pawn(Color::WHITE, WP_INIT_POS1));
+	_pullBoard.pushBack(F_Pawn::createFigure(Color::WHITE, WP_INIT_POS1));
 	_pullBoard.pushBack(whiteQueen);
-	_pullBoard.pushBack(new F_Pawn(Color::BLACK, BP_INIT_POS1));
-	_pullBoard.pushBack(new F_Knight(Color::WHITE, WN_INIT_POS1));
+	_pullBoard.pushBack(F_Pawn::createFigure(Color::BLACK, BP_INIT_POS1));
+	_pullBoard.pushBack(F_Knight::createFigure(Color::WHITE, WN_INIT_POS1));
 	_pullBoard.pushBack(whiteQueen);
-	_pullBoard.pushBack(new F_Knight(Color::BLACK, BN_INIT_POS1));
-	_pullBoard.pushBack(new F_Bishop(Color::WHITE, WB_INIT_POS1));
+	_pullBoard.pushBack(F_Knight::createFigure(Color::BLACK, BN_INIT_POS1));
+	_pullBoard.pushBack(F_Bishop::createFigure(Color::WHITE, WB_INIT_POS1));
 	_pullBoard.pushBack(blackQueen);
-	_pullBoard.pushBack(new F_Bishop(Color::BLACK, BB_INIT_POS1));
-	_pullBoard.pushBack(new F_Rook(Color::WHITE, WR_INIT_POS1));
+	_pullBoard.pushBack(F_Bishop::createFigure(Color::BLACK, BB_INIT_POS1));
+	_pullBoard.pushBack(F_Rook::createFigure(Color::WHITE, WR_INIT_POS1));
 	_pullBoard.pushBack(blackQueen);
-	_pullBoard.pushBack(new F_Rook(Color::BLACK, BR_INIT_POS1));
+	_pullBoard.pushBack(F_Rook::createFigure(Color::BLACK, BR_INIT_POS1));
 
 	int counter = 0;
 	for (auto figure : _pullBoard) {

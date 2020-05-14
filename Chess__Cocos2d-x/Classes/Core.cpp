@@ -47,26 +47,26 @@ void Core::initialSetup()
 	// Creating armies with figures 
 
 	//// White Army
-	_WKing = new F_King(Color::WHITE, WK_INIT_POS);
+	_WKing = F_King::createFigure(Color::WHITE, WK_INIT_POS);
 	_whiteArmy.pushBack(_WKing);
-	_whiteArmy.pushBack(new F_Queen(Color::WHITE, WQ_INIT_POS));
-	_whiteArmy.pushBack(new F_Bishop(Color::WHITE, WB_INIT_POS1));
-	_whiteArmy.pushBack(new F_Bishop(Color::WHITE, WB_INIT_POS2));
-	_whiteArmy.pushBack(new F_Knight(Color::WHITE, WN_INIT_POS1));
-	_whiteArmy.pushBack(new F_Knight(Color::WHITE, WN_INIT_POS2));
-	_whiteArmy.pushBack(new F_Rook(Color::WHITE, WR_INIT_POS1));
-	_whiteArmy.pushBack(new F_Rook(Color::WHITE, WR_INIT_POS2));
+	_whiteArmy.pushBack(F_Queen::createFigure(Color::WHITE, WQ_INIT_POS));
+	_whiteArmy.pushBack(F_Bishop::createFigure(Color::WHITE, WB_INIT_POS1));
+	_whiteArmy.pushBack(F_Bishop::createFigure(Color::WHITE, WB_INIT_POS2));
+	_whiteArmy.pushBack(F_Knight::createFigure(Color::WHITE, WN_INIT_POS1));
+	_whiteArmy.pushBack(F_Knight::createFigure(Color::WHITE, WN_INIT_POS2));
+	_whiteArmy.pushBack(F_Rook::createFigure(Color::WHITE, WR_INIT_POS1));
+	_whiteArmy.pushBack(F_Rook::createFigure(Color::WHITE, WR_INIT_POS2));
 
 	//// Black Army
-	_BKing = new F_King(Color::BLACK, BK_INIT_POS);
+	_BKing = F_King::createFigure(Color::BLACK, BK_INIT_POS);
 	_blackArmy.pushBack(_BKing);
-	_blackArmy.pushBack(new F_Queen(Color::BLACK, BQ_INIT_POS));
-	_blackArmy.pushBack(new F_Bishop(Color::BLACK, BB_INIT_POS1));
-	_blackArmy.pushBack(new F_Bishop(Color::BLACK, BB_INIT_POS2));
-	_blackArmy.pushBack(new F_Knight(Color::BLACK, BN_INIT_POS1));
-	_blackArmy.pushBack(new F_Knight(Color::BLACK, BN_INIT_POS2));
-	_blackArmy.pushBack(new F_Rook(Color::BLACK, BR_INIT_POS1));
-	_blackArmy.pushBack(new F_Rook(Color::BLACK, BR_INIT_POS2));
+	_blackArmy.pushBack(F_Queen::createFigure(Color::BLACK, BQ_INIT_POS));
+	_blackArmy.pushBack(F_Bishop::createFigure(Color::BLACK, BB_INIT_POS1));
+	_blackArmy.pushBack(F_Bishop::createFigure(Color::BLACK, BB_INIT_POS2));
+	_blackArmy.pushBack(F_Knight::createFigure(Color::BLACK, BN_INIT_POS1));
+	_blackArmy.pushBack(F_Knight::createFigure(Color::BLACK, BN_INIT_POS2));
+	_blackArmy.pushBack(F_Rook::createFigure(Color::BLACK, BR_INIT_POS1));
+	_blackArmy.pushBack(F_Rook::createFigure(Color::BLACK, BR_INIT_POS2));
 
 	// Pawns
 	_pawnQuantity = PAWN_QUANTITY;
@@ -77,8 +77,8 @@ void Core::initialSetup()
 		tempWhite.y += i;
 		tempBlack.y += i;
 
-		_whiteArmy.pushBack(new F_Pawn(Color::WHITE, tempWhite));
-		_blackArmy.pushBack(new F_Pawn(Color::BLACK, tempBlack));
+		_whiteArmy.pushBack(F_Pawn::createFigure(Color::WHITE, tempWhite));
+		_blackArmy.pushBack(F_Pawn::createFigure(Color::BLACK, tempBlack));
 	}
 
 	// updating board's situation considering figures' positions
@@ -267,26 +267,6 @@ void Core::loadData(const std::string& gameDataString,
 
 void Core::clearData()
 {
-	// resetting armies' bitsets and pawn quantity
-	_bit_whiteArmy.reset();
-	_bit_blackArmy.reset();
-	_pawnQuantity = 0;
-
-	// deleting current figures
-	for (auto figure : _whiteArmy) {
-		figure->removeFromParent();
-
-		delete figure;
-	}
-	_whiteArmy.clear();
-
-	for (auto figure : _blackArmy) {
-		figure->removeFromParent();
-		
-		delete figure;
-	}
-	_blackArmy.clear();
-
 	// Setting board with nullptrs
 	for (int i = 0; i < BOARD_SIZE; ++i) {
 		for (int j = 0; j < BOARD_SIZE; ++j) {
@@ -311,6 +291,22 @@ void Core::clearData()
 	_p1GameDuration = 0.0;
 	_p2GameDuration = 0.0;
 	_logMessage = "";
+
+	// resetting armies' bitsets and pawn quantity
+	_bit_whiteArmy.reset();
+	_bit_blackArmy.reset();
+	_pawnQuantity = 0;
+
+	// deleting current figures
+	for (auto figure : _whiteArmy) {
+		figure->removeFromParent();
+	}
+	_whiteArmy.clear();
+
+	for (auto figure : _blackArmy) {
+		figure->removeFromParent();
+	}
+	_blackArmy.clear();	
 }
 
 bool Core::processEvent(Location newLocation)
@@ -650,7 +646,7 @@ void Core::deletingFigure(Figure* enemyFigure)
 	(enemyFigure->getFigureColor() == Color::BLACK) ?
 		_blackArmy.eraseObject(enemyFigure) : _whiteArmy.eraseObject(enemyFigure);
 	
-	delete enemyFigure;
+	enemyFigure->autorelease();
 }
 
 void Core::arrangePromotion(Figure* figureToMove)
@@ -756,25 +752,25 @@ void Core::executePromotion(Figure* figureToMove, Type figureType)
 	
 	
 	if (figureType == Type::QUEEN) {
-		promotedFigure = new F_Queen(color, newPosition);
+		promotedFigure = F_Queen::createFigure(color, newPosition);
 
 		(bit_currentArmy->test(bit_F_Queen1)) ?
 			bit_currentArmy->set(bit_F_Queen2) : bit_currentArmy->set(bit_F_Queen1);
 	}
 	else if (figureType == Type::BISHOP) {
-		promotedFigure = new F_Bishop(color, newPosition);
+		promotedFigure = F_Bishop::createFigure(color, newPosition);
 
 		((newPosition.x + newPosition.y) % 2) ?
 			bit_currentArmy->set(bit_F_Bishop1) : bit_currentArmy->set(bit_F_Bishop2);
 	}
 	else if (figureType == Type::KNIGHT) {
-		promotedFigure = new F_Knight(color, newPosition);
+		promotedFigure = F_Knight::createFigure(color, newPosition);
 
 		(bit_currentArmy->test(bit_F_Knight1)) ?
 			bit_currentArmy->set(bit_F_Knight2) : bit_currentArmy->set(bit_F_Knight1);
 	}
 	else if (figureType == Type::ROOK) {
-		promotedFigure = new F_Rook(color, newPosition);
+		promotedFigure = F_Rook::createFigure(color, newPosition);
 
 		(bit_currentArmy->test(bit_F_Rook1)) ?
 			bit_currentArmy->set(bit_F_Rook2) : bit_currentArmy->set(bit_F_Rook1);
@@ -1046,41 +1042,41 @@ void Core::parseFigureDataString(std::string col_type_loc)
 	//setting type, creating new figure, adding figure to appropriate army and setting army's bitset
 	switch (col_type_loc.at(1)) {
 		case static_cast<char>(Type::KING) :
-			newFigure = new F_King(color, location);
+			newFigure = F_King::createFigure(color, location);
 			_currentArmy->pushBack(newFigure);
 			(color == Color::WHITE) ? _WKing = newFigure : _BKing = newFigure;
 			break;
 
 		case static_cast<char>(Type::QUEEN) :
-			newFigure = new F_Queen(color, location);
+			newFigure = F_Queen::createFigure(color, location);
 			_currentArmy->pushBack(newFigure);
 			(bit_currentArmy->test(bit_F_Queen1)) ?
 				bit_currentArmy->set(bit_F_Queen2) : bit_currentArmy->set(bit_F_Queen1);
 			break;
 
 		case static_cast<char>(Type::BISHOP) :
-			newFigure = new F_Bishop(color, location);
+			newFigure = F_Bishop::createFigure(color, location);
 			_currentArmy->pushBack(newFigure);
 			((location.x + location.y) % 2) ?
 				bit_currentArmy->set(bit_F_Bishop1) : bit_currentArmy->set(bit_F_Bishop2);
 			break;
 
 		case static_cast<char>(Type::KNIGHT) :
-			newFigure = new F_Knight(color, location);
+			newFigure = F_Knight::createFigure(color, location);
 			_currentArmy->pushBack(newFigure);
 			(bit_currentArmy->test(bit_F_Knight1)) ?
 				bit_currentArmy->set(bit_F_Knight2) : bit_currentArmy->set(bit_F_Knight1);
 			break;
 
 		case static_cast<char>(Type::ROOK) :
-			newFigure = new F_Rook(color, location);
+			newFigure = F_Rook::createFigure(color, location);
 			_currentArmy->pushBack(newFigure);
 			(bit_currentArmy->test(bit_F_Rook1)) ?
 				bit_currentArmy->set(bit_F_Rook2) : bit_currentArmy->set(bit_F_Rook1);
 			break;
 
 		case static_cast<char>(Type::PAWN) :
-			newFigure = new F_Pawn(color, location);
+			newFigure = F_Pawn::createFigure(color, location);
 			_currentArmy->pushBack(newFigure);
 			_pawnQuantity += 1;
 			break;

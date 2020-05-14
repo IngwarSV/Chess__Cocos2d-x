@@ -3,24 +3,22 @@
 using namespace cocos2d;
 using namespace DEF_SETT;
 
-Figure::Figure(Color color, Location location, Type type)
+
+bool Figure::init()
 {
-	this->_color = color;
-	this->_type = type;
-	this->_name += static_cast<char>(color);
-	this->_name += static_cast<char>(type);
-	this->_location = location;
-	this->_firstMove = true;
-	this->_possibleMoves = new std::vector<Location>();
-	this->initWithSpriteFrameName(_name + "_Pas.png");
-	this->setAnchorPoint(Vec2(0.0, 0.0));
-	this->setPosition(static_cast<float>(BOARD_X + location.y * SQUARE_SIZE), 
-		static_cast<float>(BOARD_Y + location.x * SQUARE_SIZE));
+	// initializing our figure from SpriteFrameCache
+	if (this->initWithSpriteFrameName("WK_Pas.png")) {
+		// as our sprite is not finalized one - set it invisible!
+		this->setVisible(false);
+		return true;
+	}
+	
+	return false;
 }
 
-Figure::~Figure()
+std::vector<Location>* Figure::getPossibleMoves(Figure*** board)
 {
-	delete _possibleMoves;
+	return &_possibleMoves;
 }
 
 const Color Figure::getFigureColor() const

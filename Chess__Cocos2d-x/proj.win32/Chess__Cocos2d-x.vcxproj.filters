@@ -36,9 +36,6 @@
     <ClCompile Include="..\Classes\GameSettingsMenu.cpp">
       <Filter>Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>Cpp</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\LoadGameScene.cpp">
       <Filter>Cpp</Filter>
     </ClCompile>
@@ -78,9 +75,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameSettingsMenu.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LoadGameScene.h">

@@ -23,6 +23,7 @@ enum class Color : char {
 };
 
 enum class Type : char {
+	NONE = 0,
 	KING = 75,
 	QUEEN = 81,
 	BISHOP = 66,
