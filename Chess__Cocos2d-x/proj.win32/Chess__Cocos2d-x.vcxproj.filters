@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{2cdde082-e1eb-44ad-ac80-180090213b08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cpp">
+      <UniqueIdentifier>{48493c48-0ce5-4c7f-b09d-17e6d4f27c3d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Core.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CustomGameScene.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Figure.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameMenu.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameSettingsMenu.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LoadGameScene.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MyTests.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NewGameScene.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\QuitGameScene.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SaveGameScene.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Units.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Core.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CustomGameScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Figure.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameMenu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameSettingsMenu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LoadGameScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MyTests.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NewGameScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\QuitGameScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SaveGameScene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Specification.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Units.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
