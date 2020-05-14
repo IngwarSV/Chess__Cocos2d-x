@@ -1,6 +1,4 @@
 #include "GameMenu.h"
-#include <string>
-
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -96,7 +94,10 @@ void GameMenu::onNewGamePvPlClick(cocos2d::Ref* sender)
 	Director::getInstance()->pushScene(TransitionCrossFade::create(1.0, NewGameScene::createScene()));
 }
 
-void GameMenu::onNewGamePvPCClick(cocos2d::Ref* sender) {}
+void GameMenu::onNewGamePvPCClick(cocos2d::Ref* sender) 
+{
+	//New Game (Player vs PC, NOT IMPLEMENTED)
+}
 
 void GameMenu::onCustomGameClick(cocos2d::Ref* sender)
 {
@@ -133,7 +134,3 @@ void GameMenu::onQuitGameClick(cocos2d::Ref* sender)
 
 	Director::getInstance()->end();
 }
-
-
-
-

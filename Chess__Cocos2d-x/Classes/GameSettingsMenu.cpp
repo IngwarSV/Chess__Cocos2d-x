@@ -35,8 +35,9 @@ bool GameSettingsMenu::init() {
 	box->setPosition(winSize.width / 2, winSize.height / 2);
 	this->addChild(box, 1);
 
+	// Creating sliders
 	_sliderSound = Slider::create();
-	_sliderSound->loadBarTexture("BarTexture.png"); // what the slider looks like
+	_sliderSound->loadBarTexture("BarTexture.png");
 	_sliderSound->loadSlidBallTextures("SlidBallTextures1.png", "SlidBallTextures2.png");
 	_sliderSound->loadProgressBarTexture("ProgressBarTexture.png");
 	_sliderSound->setMaxPercent(100);

@@ -3,7 +3,7 @@
 #include "cocos2d.h"
 #include <string>
 
-
+// location on board[8][8]
 struct Location {
 	int x = 0, y = 0;
 
@@ -46,7 +46,7 @@ namespace DEF_SETT {
 	//pawns quantity (for draw calculating)
 	constexpr int PAWN_QUANTITY = 16;
 
-	// Main font
+	// Main fonts
 	const std::string FONT{ "fonts/BOOK_ANTIQUA.ttf" };
 	const std::string FONT2{ "fonts/royal-serif.ttf" };
 
@@ -58,7 +58,7 @@ namespace DEF_SETT {
 	const cocos2d::Color3B METALLIC_GOLD{ 212, 175, 55 };
 	const cocos2d::Color3B CHOKOLATE{ 210,105,30 };
 
-	//GameLabels
+	// GameLabels
 	const std::string QUIT_GAME_LABEL{ "Quit Game?" };
 	const std::string SAVE_GAME_LABEL{ "Save Game" };
 	const std::string PLACEHOLDER_SAVE_GAME{ "Type here" };
@@ -191,7 +191,7 @@ namespace DEF_SETT {
 	const std::string ChoosePromotionString{ "Choose promotion: Q, B, N, R" };
 	const std::string PromotionSuccessString{ "Promotion successful!" };
 	////Save-Load
-	const std::string SuccessSaveGameString{ "File was saved as: " };
+	const std::string SuccessSaveGameString{"File was saved as: " };
 	const std::string ErrorSaveGameString{ "Error while creating file: " };
 	const std::string ErrorSaveGameOverString{ "Can't save, game over" };
 	const std::string ErrorLoadGameString{ "No files to load" };

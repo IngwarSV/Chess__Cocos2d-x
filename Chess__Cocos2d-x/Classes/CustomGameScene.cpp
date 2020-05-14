@@ -1,7 +1,5 @@
 #include "CustomGameScene.h"
 
-//#define PERFORM_TESTS 1
-
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 namespace fs = std::filesystem;
@@ -50,7 +48,7 @@ bool CustomGameScene::init() {
 	pullDesk->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
 	this->addChild(pullDesk, 1);
 
-
+	// Queens occupy two squares on the pullBoard
 	auto whiteQueen = F_Queen::createFigure(Color::WHITE, WQ_INIT_POS);
 	auto blackQueen = F_Queen::createFigure(Color::BLACK, BQ_INIT_POS);
 	
@@ -58,18 +56,18 @@ bool CustomGameScene::init() {
 	_pullBoard.pushBack(whiteQueen);
 	_pullBoard.pushBack(F_Pawn::createFigure(Color::BLACK, BP_INIT_POS1));
 	_pullBoard.pushBack(F_Knight::createFigure(Color::WHITE, WN_INIT_POS1));
-	_pullBoard.pushBack(whiteQueen);
+	_pullBoard.pushBack(whiteQueen); // 4
 	_pullBoard.pushBack(F_Knight::createFigure(Color::BLACK, BN_INIT_POS1));
 	_pullBoard.pushBack(F_Bishop::createFigure(Color::WHITE, WB_INIT_POS1));
 	_pullBoard.pushBack(blackQueen);
 	_pullBoard.pushBack(F_Bishop::createFigure(Color::BLACK, BB_INIT_POS1));
 	_pullBoard.pushBack(F_Rook::createFigure(Color::WHITE, WR_INIT_POS1));
-	_pullBoard.pushBack(blackQueen);
+	_pullBoard.pushBack(blackQueen); // 10
 	_pullBoard.pushBack(F_Rook::createFigure(Color::BLACK, BR_INIT_POS1));
 
 	int counter = 0;
 	for (auto figure : _pullBoard) {
-		if (counter == 4 || counter == 10) {
+		if (counter == 4 || counter == 10) { // queens for the second time in the Vector
 			counter += 1;
 			continue;
 		}
@@ -85,7 +83,7 @@ bool CustomGameScene::init() {
 
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(pullDeskListener, pullDesk);
 	
-	// Deploying kings on the board
+	// Deploying kings on the board, kings can't be deleted
 	_core->parseFigureDataString(WK_STRING);
 	_WKing = _core->getFigureOnBoard(WK_INIT_POS);
 	this->addChild(_WKing, BOARD_SIZE - _WKing->getLocation().x);
@@ -106,20 +104,20 @@ bool CustomGameScene::init() {
 
 	//Creating MenuItem for SaveGame button
 	MenuItemSprite* PlayGame = MenuItemSprite::create(PlayGameButton1, PlayGameButton2, CC_CALLBACK_1(CustomGameScene::onPlayGameClick, this));
-	PlayGame->setScale(0.8f);
-	PlayGame->setPosition(SAVE_GAME_BUT);
+		PlayGame->setScale(0.8f);
+		PlayGame->setPosition(SAVE_GAME_BUT);
 	//Creating MenuItem for LoadGame button
 	MenuItemSprite* LoadGame = MenuItemSprite::create(ClearDataButton1, ClearDataButton2, CC_CALLBACK_1(CustomGameScene::onClearDataClick, this));
-	LoadGame->setScale(0.8f);
-	LoadGame->setPosition(LOAD_GAME_BUT);
+		LoadGame->setScale(0.8f);
+		LoadGame->setPosition(LOAD_GAME_BUT);
 	//Creating MenuItem for GameSettings button
 	MenuItemSprite* GameSettings = MenuItemSprite::create(GameSettingsButton1, GameSettingsButton2, CC_CALLBACK_1(CustomGameScene::onGameSettingsClick, this));
-	GameSettings->setScale(0.8f);
-	GameSettings->setPosition(GAME_SETT_BUT);
+		GameSettings->setScale(0.8f);
+		GameSettings->setPosition(GAME_SETT_BUT);
 	//Creating MenuItem for QuitGame button
 	MenuItemSprite* QuitGame = MenuItemSprite::create(QuitGameButton1, QuitGameButton2, CC_CALLBACK_1(CustomGameScene::onQuitGameClick, this));
-	QuitGame->setScale(0.8f);
-	QuitGame->setPosition(QUIT_BUT);
+		QuitGame->setScale(0.8f);
+		QuitGame->setPosition(QUIT_BUT);
 
 	auto menu = Menu::create(PlayGame, LoadGame, GameSettings, QuitGame, nullptr);
 	this->addChild(menu);
@@ -140,6 +138,7 @@ bool CustomGameScene::init() {
 	_blackKingIcon->setPosition(BLACK_SIDE_POS);
 	this->addChild(_blackKingIcon, 100);
 
+	// listeners for Side to Move in future game
 	auto WKListener = EventListenerMouse::create();
 	WKListener->onMouseDown = [&](Event* event) {
 		EventMouse* mouseEvent = dynamic_cast<EventMouse*>(event);
@@ -183,6 +182,7 @@ bool CustomGameScene::init() {
 }
 
 void CustomGameScene::update(float deltaTime) {
+	// resuming music in case of "popScene" from another scene
 	if (AudioEngine::getState(_layerMusicID) != AudioEngine::AudioState::PLAYING) {
 		_layerMusicID = AudioEngine::play2d(CUSTOM_MUSIC, true, _core->getMusicVolume());
 	}
@@ -194,15 +194,17 @@ void CustomGameScene::processEvent(cocos2d::Vec2 location)
 
 	float floatX = (location.y - BOARD_Y) / SQUARE_SIZE;
 	float floatY = (location.x - BOARD_X) / SQUARE_SIZE;
-
+	// if click is out of the board
 	if (floatX < 0 || floatX >= BOARD_SIZE || 
 		floatY < 0 || floatY >= BOARD_SIZE) {
+		// if Active figure on the pullBoard exists
 		if (_pullBoardFigure) {
 			_pullBoardFigure->setPassiveState();
 			_pullBoardFigure = nullptr;
 		}
-		
+		// if Active figure on the mainBoard exists
 		if (_existingBoardFigure) {
+			// kings can't be deleted
 			if (_existingBoardFigure == _WKing || _existingBoardFigure == _BKing) {
 				_existingBoardFigure->setPassiveState();
 				_existingBoardFigure = nullptr;
@@ -210,6 +212,7 @@ void CustomGameScene::processEvent(cocos2d::Vec2 location)
 				_logMessageLabel->setString(SaveTheKingString);
 				return;
 			}
+			// deleting Active figure on the mainBoard
 			_core->deletingFigure(_existingBoardFigure);
 			_existingBoardFigure = nullptr;
 		}
@@ -223,12 +226,15 @@ void CustomGameScene::processEvent(cocos2d::Vec2 location)
 
 	Figure* squareToDeploy = _core->getFigureOnBoard(boardLocation);
 
+	// if player choose figure on the pullBoard
 	if (_pullBoardFigure) {
 		if (_existingBoardFigure) {
 			_existingBoardFigure->setPassiveState();
 			_existingBoardFigure = nullptr;
 		}
+		// in case placing on existing figure on the mainBoard
 		if (squareToDeploy) {
+			// kings can't be deleted
 			if (squareToDeploy == _WKing || squareToDeploy == _BKing) {
 				_pullBoardFigure->setPassiveState();
 				_pullBoardFigure = nullptr;
@@ -237,14 +243,17 @@ void CustomGameScene::processEvent(cocos2d::Vec2 location)
 			}
 			_core->deletingFigure(squareToDeploy);
 		}
+		// creating dataString (color, type, location, firstMove) and sending it to core to save in Army (W/B)
 		_core->parseFigureDataString(createFigureDataString(_pullBoardFigure, boardLocation));
+		// placing figure on this layer
 		auto figure = _core->getFigureOnBoard(boardLocation);
 		this->addChild(figure, BOARD_SIZE - figure->getLocation().x);
+
 		AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
 
 		return;
 	}
-
+	// if player choose existing figure on the mainBoard
 	if (_existingBoardFigure) {
 		if (_existingBoardFigure->getLocation() == boardLocation) {
 			_existingBoardFigure->setPassiveState();
@@ -252,7 +261,9 @@ void CustomGameScene::processEvent(cocos2d::Vec2 location)
 			_logMessageLabel->setString(CustomModeString);
 			return;
 		}
+		// in case placing on existing figure on the mainBoard
 		if (squareToDeploy) {
+			// kings can't be deleted
 			if (squareToDeploy == _WKing || squareToDeploy == _BKing) {
 				_existingBoardFigure->setPassiveState();
 				_existingBoardFigure = nullptr;
@@ -262,6 +273,7 @@ void CustomGameScene::processEvent(cocos2d::Vec2 location)
 			}
 			_core->deletingFigure(squareToDeploy);
 		}
+		// moving figure 
 		_core->makeMove(_existingBoardFigure, _existingBoardFigure->getLocation(), boardLocation);
 		_existingBoardFigure = nullptr;
 
@@ -270,6 +282,7 @@ void CustomGameScene::processEvent(cocos2d::Vec2 location)
 		return;
 	}
 
+	// choosing figure on the mainBoard
 	if (!_existingBoardFigure && squareToDeploy) {
 		_existingBoardFigure = squareToDeploy;
 		_existingBoardFigure->setActiveState();
@@ -292,7 +305,7 @@ void CustomGameScene::onMouseDown(Event* event)
 void CustomGameScene::onPullDeskMouseDown(cocos2d::Event* event)
 {
 	EventMouse* mouseEvent = dynamic_cast<EventMouse*>(event);
-
+	// choosing figure on the pullBoard
 	if (mouseEvent->getCurrentTarget()->getBoundingBox().containsPoint(mouseEvent->getLocationInView())) {
 		if (_pullBoardFigure) {
 			_pullBoardFigure->setPassiveState();
@@ -309,16 +322,14 @@ void CustomGameScene::onPullDeskMouseDown(cocos2d::Event* event)
 		Location boardLocation;
 
 		float floatX = (location.y - CUS_BOARD_Y) / SQUARE_SIZE;
-		if (floatX < 0 || floatX >= CUS_BOARD_ROW_SIZE) {
+		float floatY = (location.x - CUS_BOARD_X) / SQUARE_SIZE;
+		if (floatX < 0 || floatX >= CUS_BOARD_ROW_SIZE ||
+			floatY < 0 || floatY >= CUS_BOARD_COL_SIZE) {
 			_logMessageLabel->setString(CustomModeString);
+			// click is out of the board
 			return;
 		}
 
-		float floatY = (location.x - CUS_BOARD_X) / SQUARE_SIZE;
-		if (floatY < 0 || floatY >= CUS_BOARD_COL_SIZE) {
-			_logMessageLabel->setString(CustomModeString);
-			return;
-		}
 		int index = static_cast<int>(floatX) * CUS_BOARD_COL_SIZE + static_cast<int>(floatY);
 
 		_pullBoardFigure = _pullBoard.at(index);
@@ -334,6 +345,7 @@ void CustomGameScene::onPlayGameClick(cocos2d::Ref* sender)
 	AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
 	if (_activeSide == Color::NONE) {
 		_logMessageLabel->setString(ChooseSideToMoveString);
+		// player didn't choose side to move first
 		return;
 	}
 
@@ -363,9 +375,13 @@ void CustomGameScene::onPlayGameClick(cocos2d::Ref* sender)
 	}
 	bArmyDataString += "\n";
 	
+	// core loads all data for game
 	_core->loadData(gameDataString, wArmyDataString, bArmyDataString, CustomGameLoadedString);
+
 	this->pause();
+
 	AudioEngine::stop(_layerMusicID);
+
 	Director::getInstance()->popToRootScene();
 	Director::getInstance()->pushScene(TransitionCrossFade::create(1.0, NewGameScene::createScene()));
 
@@ -400,15 +416,19 @@ void CustomGameScene::onClearDataClick(cocos2d::Ref* sender)
 void CustomGameScene::onGameSettingsClick(cocos2d::Ref* sender)
 {
 	this->pause();
+
 	AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
 	AudioEngine::stop(_layerMusicID);
+
 	Director::getInstance()->pushScene(GameSettingsMenu::createScene());
 }
 
 void CustomGameScene::onQuitGameClick(cocos2d::Ref* sender)
 {
 	this->pause();
+
 	AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
 	AudioEngine::stop(_layerMusicID);
+
 	Director::getInstance()->pushScene(QuitGameScene::createScene());
 }

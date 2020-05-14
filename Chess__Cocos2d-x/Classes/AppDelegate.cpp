@@ -137,8 +137,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     tests.runCoreTests();
 #endif
 
-
-
     // create a scene. it's an autorelease object
     auto scene = GameMenu::createScene();
 

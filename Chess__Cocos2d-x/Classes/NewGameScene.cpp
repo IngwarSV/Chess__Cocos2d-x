@@ -1,7 +1,7 @@
 #include "NewGameScene.h"
 
 /* showing tests results for game logic 
-(please define PERFORM_TESTS in AppDelegate.cpp too to run tests)*/
+(please define PERFORM_TESTS in AppDelegate.cpp too, to run tests)*/
 #define PERFORM_TESTS 1
 
 using namespace cocos2d;
@@ -28,7 +28,7 @@ bool NewGameScene::init() {
 
 	// Setting background with desk
 	auto background = cocos2d::Sprite::create("NewGameLayer.png");
-		background->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+	background->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
 	this->addChild(background, 0);
 
 	//Creating button sprites for menu
@@ -63,31 +63,31 @@ bool NewGameScene::init() {
 
 	//Adding ScrollView for movesLog
 	_scrollView = cocos2d::ui::ScrollView::create();
-		_scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
-		_scrollView->setContentSize(SCROLL_VIEW_SIZE);
-		_scrollView->setBackGroundColorType(ui::ScrollView::BackGroundColorType::NONE);
-		_scrollView->setPosition(SCROLL_VIEW_POS);
-		_scrollView->setInnerContainerSize(Size(SCROLL_VIEW_SIZE.width, winSize.height));
-		const float CoordY = (_scrollView->getInnerContainerSize().height - _scrollView->getContentSize().height) * (-1);
-		_scrollView->setInnerContainerPosition(Vec2(0.0f, CoordY));
-		_scrollView->setBounceEnabled(false);
-		_scrollView->setInertiaScrollEnabled(false);
-		_scrollView->setScrollBarEnabled(true);
-		//_scrollView->setScrollBarAutoHideTime(winSize.height);
-		_scrollView->setScrollBarWidth(10);
-		_scrollView->setScrollBarPositionFromCorner(Vec2(14, 15));
-		_scrollView->setScrollBarColor(METALLIC_GOLD);
-		_scrollView->setScrollBarOpacity(255);
+	_scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+	_scrollView->setContentSize(SCROLL_VIEW_SIZE);
+	_scrollView->setBackGroundColorType(ui::ScrollView::BackGroundColorType::NONE);
+	_scrollView->setPosition(SCROLL_VIEW_POS);
+	_scrollView->setInnerContainerSize(Size(SCROLL_VIEW_SIZE.width, winSize.height));
+	const float CoordY = (_scrollView->getInnerContainerSize().height - _scrollView->getContentSize().height) * (-1);
+	_scrollView->setInnerContainerPosition(Vec2(0.0f, CoordY));
+	_scrollView->setBounceEnabled(false);
+	_scrollView->setInertiaScrollEnabled(false);
+	_scrollView->setScrollBarEnabled(true);
+	//_scrollView->setScrollBarAutoHideTime(winSize.height);
+	_scrollView->setScrollBarWidth(10);
+	_scrollView->setScrollBarPositionFromCorner(Vec2(14, 15));
+	_scrollView->setScrollBarColor(METALLIC_GOLD);
+	_scrollView->setScrollBarOpacity(255);
 	this->addChild(_scrollView, 1);
 	//// Adding "Game started!" string to ScrollView
 	auto textWidget = ui::Text::create();
-		textWidget->setString(GAME_STARTED_STRING);
-		textWidget->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-		textWidget->setFontName(FONT);
-		textWidget->setFontSize(LABEL_FONT_SIZE);
-		textWidget->setColor(METALLIC_GOLD);
-		textWidget->setPosition(Vec2(labelCoordX, _scrollView->getInnerContainerSize().height - LABEL_DISTANCE));
-		_playersMoves.pushBack(textWidget);
+	textWidget->setString(GAME_STARTED_STRING);
+	textWidget->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+	textWidget->setFontName(FONT);
+	textWidget->setFontSize(LABEL_FONT_SIZE);
+	textWidget->setColor(METALLIC_GOLD);
+	textWidget->setPosition(Vec2(labelCoordX, _scrollView->getInnerContainerSize().height - LABEL_DISTANCE));
+	_playersMoves.pushBack(textWidget);
 	_scrollView->addChild(textWidget);
 
 #if PERFORM_TESTS
@@ -115,30 +115,30 @@ bool NewGameScene::init() {
 
 	//Adding logMessages label
 	_logMessageLabel = Label::createWithTTF(_core->getLogMessage(), FONT, LABEL_DISTANCE);
-		_logMessageLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
-		_logMessageLabel->setColor(METALLIC_GOLD);
-		_logMessageLabel->setPosition(LOG_MESS_POS);
+	_logMessageLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
+	_logMessageLabel->setColor(METALLIC_GOLD);
+	_logMessageLabel->setPosition(LOG_MESS_POS);
 	this->addChild(_logMessageLabel, 100);
 
 	//Adding Timers labels
 	_p1Timer = Label::createWithTTF("00:00", FONT2, LABEL_FONT_SIZE + 4);
-		_p1Timer->setAnchorPoint(Vec2(0.0f, 0.0f));
-		_p1Timer->setColor(METALLIC_GOLD);
-		_p1Timer->setPosition(TIMER1_POS);
+	_p1Timer->setAnchorPoint(Vec2(0.0f, 0.0f));
+	_p1Timer->setColor(METALLIC_GOLD);
+	_p1Timer->setPosition(TIMER1_POS);
 	this->addChild(_p1Timer, 100);
 
 	_p2Timer = Label::createWithTTF("00:00", FONT2, LABEL_FONT_SIZE + 4);
-		_p2Timer->setAnchorPoint(Vec2(0.0f, 0.0f));
-		_p2Timer->setColor(METALLIC_GOLD);
-		_p2Timer->setPosition(TIMER2_POS);
+	_p2Timer->setAnchorPoint(Vec2(0.0f, 0.0f));
+	_p2Timer->setColor(METALLIC_GOLD);
+	_p2Timer->setPosition(TIMER2_POS);
 	this->addChild(_p2Timer, 100);
 
 	//Adding ActiveSide sprites
 	_whiteKingIcon = Sprite::createWithSpriteFrameName(WK_ACT_ICON);
-		_whiteKingIcon->setPosition(ACT_SIDE_POS1);
+	_whiteKingIcon->setPosition(ACT_SIDE_POS1);
 	this->addChild(_whiteKingIcon, 100);
 	_blackKingIcon = Sprite::createWithSpriteFrameName(BK_PAS_ICON);
-		_blackKingIcon->setPosition(ACT_SIDE_POS2);
+	_blackKingIcon->setPosition(ACT_SIDE_POS2);
 	this->addChild(_blackKingIcon, 100);
 	
 	//Handle Touch Events
@@ -155,10 +155,10 @@ bool NewGameScene::init() {
 	// Play BackgroundMusic
 	_layerMusicID = AudioEngine::play2d(CHESS_CLOCK, true, _core->getSoundsVolume());
 
-	// Starting first turn
+	// Starting first turn duration counting
 	_core->startTurnDurationCount();
 
-	// in case of custom game
+	// in case of loading custom game with gameOverConditions
 	if (_core->getGameOver()) {
 		_logMessageLabel->setString(_core->getLogMessage());
 		this->unscheduleUpdate();
@@ -175,11 +175,11 @@ void NewGameScene::update(float deltaTime) {
 	}
 
 	updateTimers();
-	_logMessageLabel->setString(_core->getLogMessage());
 
+	_logMessageLabel->setString(_core->getLogMessage());
 }
 
-void NewGameScene::processEvent(cocos2d::Vec2 location)
+void NewGameScene::processEvent(cocos2d::Vec2 location) // location of onMouseDown event 
 {
 	const float floatX = (location.y - BOARD_Y) / SQUARE_SIZE;
 	const float floatY = (location.x - BOARD_X) / SQUARE_SIZE;
@@ -195,15 +195,17 @@ void NewGameScene::processEvent(cocos2d::Vec2 location)
 
 	// directing location to core for processing
 	if (_core->processEvent(boardLocation)) {
+		// in case of GameOver
 		if (_core->getGameOver()) {
 			_logMessageLabel->setString(_core->getLogMessage());
 			this->unscheduleUpdate();
 			this->getEventDispatcher()->removeEventListenersForTarget(this, false);
 		}
-		// Setting SideToMoveIcon
+
+		// setting SideToMoveIcon
 		setActiveIcon();
 
-		//Updating movesLog
+		// updating movesLog
 		auto lastMove = _core->getLastMove();
 		std::string text = (lastMove.at(0) == 'W') ? WHITE_PL_STRING : BLACK_PL_STRING;
 		text += lastMove.substr(2, 5) + '\t' + lastMove.substr(7, 5);
@@ -219,19 +221,24 @@ void NewGameScene::onMouseDown(Event* event)
 
 void NewGameScene::onSaveGameClick(cocos2d::Ref* sender)
 {
+	// can't save game if GameOver
 	if (_core->getGameOver()) {
 		_core->setLogMessage(ErrorSaveGameOverString);
 
 		return;
 	}
+	// can't save game if player has to choose promotion
 	if (_core->getFigureToPromote()) {
 		_core->setLogMessage(ErrorActionDuringPromotionString);
 
 		return;
 	}
+
 	this->pause();
+
 	AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
 	AudioEngine::stop(_layerMusicID);
+
 	Director::getInstance()->pushScene(SaveGameScene::createScene());
 }
 
@@ -245,7 +252,7 @@ void NewGameScene::onLoadGameClick(cocos2d::Ref* sender)
 
 		return;
 	}
-	
+	// can't load game if player has to choose promotion
 	if (_core->getFigureToPromote()) {
 		_core->setLogMessage(ErrorActionDuringPromotionString);
 
@@ -253,8 +260,10 @@ void NewGameScene::onLoadGameClick(cocos2d::Ref* sender)
 	}
 
 	this->pause();
+
 	AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
 	AudioEngine::stop(_layerMusicID);
+
 	Director::getInstance()->pushScene(LoadGameScene::createScene());
 }
 
@@ -265,22 +274,29 @@ void NewGameScene::onGameSettingsClick(cocos2d::Ref* sender)
 
 		return;
 	}
+
 	this->pause();
+
 	AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
 	AudioEngine::stop(_layerMusicID);
+
 	Director::getInstance()->pushScene(GameSettingsMenu::createScene());
 }
 
 void NewGameScene::onQuitGameClick(cocos2d::Ref* sender)
 {
+	// can't quit game if player has to choose promotion
 	if (_core->getFigureToPromote()) {
 		_core->setLogMessage(ErrorActionDuringPromotionString);
 
 		return;
 	}
+
 	this->pause();
+
 	AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
 	AudioEngine::stop(_layerMusicID);
+
 	Director::getInstance()->pushScene(QuitGameScene::createScene());
 }
 

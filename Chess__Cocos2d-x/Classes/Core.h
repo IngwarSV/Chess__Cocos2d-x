@@ -21,8 +21,7 @@ private:
 // attributes
 	// Board[SIZE][SIZE], BOARD_SIZE = 8;
 	std::vector < std::vector<Figure*>> _board;
-	//Figure*** _board;
-
+	
 	// sets for "White" and "Black" armies and pointers on them
 	cocos2d::Vector<Figure*> _whiteArmy = cocos2d::Vector<Figure*>(16);
 	cocos2d::Vector<Figure*> _blackArmy = cocos2d::Vector<Figure*>(16);
@@ -48,7 +47,7 @@ private:
 	// temp data for "en passant"/"promotion" actions 
 	Figure* _enPassantFigure; // pawn that just made two-squares move
 	Figure* _figureToPromote; // pawn that reached board's edge
-	/* square that was skipped by pawn
+	/* square that was skipped by "en passant" pawn or
 	previous position of promoted pawn*/
 	Location _tempLocation; 
 	
@@ -122,7 +121,7 @@ public:
 
 	void executePromotion(Figure* figureToMove, Type figureType);
 	
-	//parsing string into figure's data
+	//parsing string into figure's data (in case of loading saved game, custom game)
 	void parseFigureDataString(std::string col_type_loc); 
 
 	// reseting turnDurationCount
@@ -133,16 +132,17 @@ public:
 	const cocos2d::Vector<Figure*>* getBlackArmy() const;
 	const cocos2d::Vector<Figure*>* getCurrentArmy() const;
 	Figure* getActiveKing() const;
-	Figure* getFigureOnBoard(Location point) const;
+	Figure* getFigureOnBoard(Location location) const;
 	const Figure* getFigureToPromote() const;
 	const std::string& getLogMessage() const;
 	const bool getGameOver() const;
 	const int getHalfTurn() const;
-	const std::pair<double, double> getGameDuration();
 	const std::vector<std::string>* getMovesVector() const;
 	const std::string& getLastMove() const;
-	float getSoundsVolume();
-	float getMusicVolume();
+	const float getSoundsVolume() const;
+	const float getMusicVolume() const;
+	//// updating and providing gameDuration
+	const std::pair<double, double> getGameDuration();
 
 	//setters
 	void setLogMessage(std::string logMessage);

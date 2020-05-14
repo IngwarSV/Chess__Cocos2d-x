@@ -3,9 +3,9 @@
 using namespace cocos2d;
 using namespace ui;
 using namespace cocos2d::experimental;
-
-using namespace DEF_SETT;
 namespace fs = std::filesystem;
+using namespace DEF_SETT;
+
 
 cocos2d::Scene* SaveGameScene::createScene() {
 	cocos2d::Scene* scene = cocos2d::Scene::create();
@@ -28,7 +28,7 @@ bool SaveGameScene::init() {
 
 	// Setting background
 	auto background = cocos2d::Sprite::create("BG2HD.png");
-		background->setAnchorPoint(cocos2d::Vec2(0.0, 0.0));
+	background->setAnchorPoint(cocos2d::Vec2(0.0, 0.0));
 	this->addChild(background, 0);
 
 	// Setting box
@@ -122,6 +122,7 @@ bool SaveGameScene::init() {
 				break;
 			}
 		});
+
 		scrollView->addChild(button, 3);
 	}
 
@@ -151,9 +152,11 @@ bool SaveGameScene::init() {
 					filename += ".txt";
 				}
 				_core->saveData(filename);
+
 				AudioEngine::stop(_layerMusicID);
 				AudioEngine::play2d(CLICK_SOUND_SAMPLE, false, _core->getSoundsVolume());
 				 _core->startTurnDurationCount();
+
 				Director::getInstance()->popScene();
 			}
 			break;

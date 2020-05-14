@@ -8,8 +8,8 @@ bool Figure::init()
 {
 	// initializing our figure from SpriteFrameCache
 	if (this->initWithSpriteFrameName("WK_Pas.png")) {
-		// as our sprite is not finalized one - set it invisible!
 		this->setVisible(false);
+		
 		return true;
 	}
 	

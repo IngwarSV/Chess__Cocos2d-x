@@ -2,6 +2,7 @@
 
 using namespace DEF_SETT;
 
+
 bool MyTests::TestIsCheck() {
     // WK is in check under attack by BQ
     _core->loadData("1 0 0 8 8 8 8", "WKA80", "BQA50 BKC40", "");

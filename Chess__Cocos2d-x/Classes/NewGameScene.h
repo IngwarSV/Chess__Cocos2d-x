@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "audio/include/AudioEngine.h"
@@ -12,14 +11,15 @@
 #include "GameSettingsMenu.h"
 #include "QuitGameScene.h"
 
+
 class NewGameScene : public cocos2d::Layer {
 private:
 // attributes
 	Core* _core = Core::sharedCore();
 	int _layerMusicID = 0;
 	cocos2d::Label* _logMessageLabel;
-	cocos2d::Label* _p1Timer;
-	cocos2d::Label* _p2Timer;
+	cocos2d::Label* _p1Timer = nullptr;
+	cocos2d::Label* _p2Timer = nullptr;
 	cocos2d::Sprite* _whiteKingIcon = nullptr;
 	cocos2d::Sprite* _blackKingIcon = nullptr;
 	cocos2d::ui::ScrollView* _scrollView = nullptr;

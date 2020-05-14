@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "audio/include/AudioEngine.h"
@@ -11,6 +10,7 @@
 #include "GameSettingsMenu.h"
 #include "QuitGameScene.h"
 
+
 class CustomGameScene : public cocos2d::Layer {
 private:
 	Core* _core = Core::sharedCore();
@@ -18,20 +18,22 @@ private:
 	int _layerMusicID = 0;
 	cocos2d::Label* _logMessageLabel;
 
-
 	//// PULL_BOARD 4 x 3
 	cocos2d::Vector<Figure*> _pullBoard;
 
-	// Figure to deploy
+	// Active figure to deploy from the pullBoard
 	Figure* _pullBoardFigure = nullptr;
+	// Active figure, which is already on the board
 	Figure* _existingBoardFigure = nullptr;
 	// Their majesty The Kings
 	Figure* _WKing = nullptr;
 	Figure* _BKing = nullptr;
-
+	
+	// Side to move first after beginning of the game
 	cocos2d::Sprite* _whiteKingIcon = nullptr;
 	cocos2d::Sprite* _blackKingIcon = nullptr;
 
+	// layer sends data string to Core to save figure in Army(W/B) after every deploying
 	std::string createFigureDataString(Figure* figureToDeploy, Location boardLocation);
 
 public:

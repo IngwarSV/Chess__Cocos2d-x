@@ -10,7 +10,6 @@
 #include "Specification.h"
 
 
-
 class LoadGameScene : public cocos2d::Layer {
 private:
 	Core* _core = Core::sharedCore();

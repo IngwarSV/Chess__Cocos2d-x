@@ -3,8 +3,9 @@
 using namespace cocos2d;
 using namespace ui;
 using namespace cocos2d::experimental;
-using namespace DEF_SETT;
 namespace fs = std::filesystem;
+using namespace DEF_SETT;
+
 
 cocos2d::Scene* LoadGameScene::createScene() {
 	cocos2d::Scene* scene = cocos2d::Scene::create();

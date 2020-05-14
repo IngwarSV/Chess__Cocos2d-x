@@ -11,7 +11,6 @@ bool Core::init() {
 	}
 	
 	auto spritecache = SpriteFrameCache::getInstance();
-
 	spritecache->addSpriteFramesWithFile("Images.plist", "Images.png");
 
 	// preloading music and sounds
@@ -84,7 +83,7 @@ void Core::initialSetup()
 		_board[location.x][location.y] = figure;
 	}
 
-	// initializing rest of the attributes
+	// assigning values to the rest of the attributes
 	_currentArmy = &_whiteArmy;
 	_enemyArmy = &_blackArmy;
 	_activeKing = _WKing;
@@ -376,7 +375,6 @@ bool Core::processEvent(Location newLocation)
 		return endTurn(currentLocation, newLocation);
 	}
 
-
 	// en passant checking, execution if true
 	if (enPassant(_figureToMove, currentLocation, newLocation)) {
 		Location enPassantLocation = _enPassantFigure->getLocation();
@@ -651,7 +649,7 @@ void Core::arrangePromotion(Figure* figureToMove)
 		child->setOpacity(100);
 	}
 
-	// Creating QueenSprite
+	// Creating QueenSprite to provide option
 	auto queen = Sprite::createWithSpriteFrameName(GOLDEN_Q_ICON);
 	queen->setScale(0.6f);
 	queen->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
@@ -744,6 +742,7 @@ void Core::executePromotion(Figure* figureToMove, Type figureType)
 	if (figureType == Type::QUEEN) {
 		promotedFigure = F_Queen::createFigure(color, newPosition);
 
+		// updating bit_sets (for draw calculatings)
 		(bit_currentArmy->test(bit_F_Queen1)) ?
 			bit_currentArmy->set(bit_F_Queen2) : bit_currentArmy->set(bit_F_Queen1);
 	}
@@ -861,7 +860,7 @@ bool Core::isCheckmate()
 {
 	Location kingLocation = _activeKing->getLocation();
 
-	// checking if king can escape check by himself
+	// checking if king can escape attack by himself
 	auto v_possibleMoves = _activeKing->getPossibleMoves(&_board);
 
 	for (auto possiblePosition : *v_possibleMoves) {
@@ -1109,7 +1108,8 @@ const Figure* Core::getFigureToPromote() const
 	return _figureToPromote;
 }
 
-const std::string& Core::getLogMessage() const {
+const std::string& Core::getLogMessage() const 
+{
 	return _logMessage;
 }
 
@@ -1123,22 +1123,6 @@ const int Core::getHalfTurn() const
 	return _halfTurn;
 }
 
-const std::pair<double, double> Core::getGameDuration() 
-{
-	const auto tempTime = time(NULL);
-	
-	if (_halfTurn % 2) {
-		_p1GameDuration += difftime(tempTime, _turnDuration);
-	}
-	else {
-		_p2GameDuration += difftime(tempTime, _turnDuration);
-	}
-
-	_turnDuration = tempTime;
-
-	return std::pair<double, double>(_p1GameDuration, _p2GameDuration);
-}
-
 const std::vector<std::string>* Core::getMovesVector() const
 {
 	return &_movesVector;
@@ -1149,19 +1133,35 @@ const std::string& Core::getLastMove() const
 	return _movesVector.back();
 }
 
-Figure* Core::getFigureOnBoard(Location point) const
+Figure* Core::getFigureOnBoard(Location location) const
 {
-	return _board[point.x][point.y];
+	return _board[location.x][location.y];
 }
 
-float Core::getSoundsVolume()
+const float Core::getSoundsVolume() const
 {
 	return _soundsVolume;
 }
 
-float Core::getMusicVolume()
+const float Core::getMusicVolume() const
 {
 	return _musicVolume;
+}
+
+const std::pair<double, double> Core::getGameDuration()
+{
+	const auto tempTime = time(NULL);
+
+	if (_halfTurn % 2) {
+		_p1GameDuration += difftime(tempTime, _turnDuration);
+	}
+	else {
+		_p2GameDuration += difftime(tempTime, _turnDuration);
+	}
+
+	_turnDuration = tempTime;
+
+	return std::pair<double, double>(_p1GameDuration, _p2GameDuration);
 }
 
 // setters

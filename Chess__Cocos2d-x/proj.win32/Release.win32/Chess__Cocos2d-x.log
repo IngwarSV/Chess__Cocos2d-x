@@ -1,10 +1,3 @@
-﻿  Units.cpp
-     Creating library D:\WAY\FreePlay\Chess__Cocos2d-x\Chess__Cocos2d-x\proj.win32\Release.win32\Chess__Cocos2d-x.lib and object D:\WAY\FreePlay\Chess__Cocos2d-x\Chess__Cocos2d-x\proj.win32\Release.win32\Chess__Cocos2d-x.exp
-  Generating code
-  2034 of 3543 functions (57.4%) were compiled, the rest were copied from previous compilation.
-    68 functions were new in current compilation
-    104 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  Chess__Cocos2d-x.vcxproj -> D:\WAY\FreePlay\Chess__Cocos2d-x\Chess__Cocos2d-x\proj.win32\Release.win32\Chess__Cocos2d-x.exe
+﻿  Chess__Cocos2d-x.vcxproj -> D:\WAY\FreePlay\Chess__Cocos2d-x\Chess__Cocos2d-x\proj.win32\Release.win32\Chess__Cocos2d-x.exe
   Performing Custom Build Step
   Скопировано файлов: 0.

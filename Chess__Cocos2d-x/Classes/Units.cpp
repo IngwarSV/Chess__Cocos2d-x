@@ -1,6 +1,8 @@
 #include "Units.h"
+
 using namespace cocos2d;
 using namespace DEF_SETT;
+
 
 F_King* F_King::createFigure(Color color, Location location, Type type)
 {
