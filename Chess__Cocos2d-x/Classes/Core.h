@@ -1,7 +1,14 @@
 //thanks to Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
 
 #pragma once
-
+/* Core is the main logic class (singleton, is avaible to all scenes), which includes main game data 
+and carry out game logic. Main element is board[8][8] - std::vector < std::vector<Figure*>> _board, 
+where all calculating are done. Square contains Figure*, which inherits from cocos2d::Sprite, or 
+nullptr if it is empty. 
+Future improvements:
+1. Core is too big and needs to be divided to few more little classes.
+2. It would be better to store figures in  pull but not delete them
+*/
 #include "cocos2d.h"
 #include "audio/include/AudioEngine.h"
 #include <iostream>
@@ -28,8 +35,8 @@ private:
 	cocos2d::Vector<Figure*>* _currentArmy;
 	cocos2d::Vector<Figure*>* _enemyArmy;
 	
-	/* bitsets 0111 1111 for 8 figures (B1, B2, N1, N2, R1, R2, Q1, Q2) 
-	in army including 1 place for promoted Queen */
+	/* bitsets 0111 1111 for 8 figures (B1, B2, N1, N2, R1, R2, Q1, Q2) in army 
+	including 1 place for promoted Queen. Bitsets are used for draw calculatings */
 	std::bitset<BOARD_SIZE> _bit_whiteArmy{ 127 };
 	std::bitset<BOARD_SIZE> _bit_blackArmy{ 127 };
 
@@ -57,7 +64,7 @@ private:
 	double _p1GameDuration;
 	double _p2GameDuration;
 	
-	// storing halfTurn duration
+	// for game duration calculations
 	time_t _turnDuration;
 	
 	// storing moves (for scrollView in NewGameScene)
@@ -71,7 +78,7 @@ private:
 	
 // methods
 	bool init();
-
+	
 	cocos2d::Vec2 convertCoord(Location location);
 
 	std::string getMoveString(Location currentLocation, Location newLocation);

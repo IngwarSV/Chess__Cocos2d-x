@@ -475,41 +475,48 @@ bool Core::processEvent(Location newLocation)
 
 bool Core::castling(Figure* king, Location currentLocation, Location newLocation)
 {
-	if ((king->getType() == Type::KING) && !_CHECK) {
-		if (king->_firstMove) {
-			if (newLocation == Location{ king->getLocation().x, 2 } ||
-				newLocation == Location{ king->getLocation().x, 6 }) {
+	if ((king->getType() != Type::KING) || _CHECK) {
+		// it's not a castling move or king is under attack
+		return false;
+	}
+	
+	if (!king->_firstMove) {
+		// king can't make a castling move
+		return false;
+	}
+	if (newLocation != Location{ king->getLocation().x, 2 } &&
+		newLocation != Location{ king->getLocation().x, 6 }) {
+		// it's not a castling move
+		return false;
+	}
 
-				// cheking if squares king has to move through are empty
-				const int delta = (newLocation.y - currentLocation.y) / 2;
-				Location square1{ currentLocation.x, currentLocation.y + delta };
-				Location square2{ currentLocation.x, currentLocation.y + delta + delta };
-				if (!_board[currentLocation.x][square1.y] && !_board[currentLocation.x][square2.y]) {
+	// cheking if squares king has to move through are empty
+	const int delta = (newLocation.y - currentLocation.y) / 2;
+	Location square1{ currentLocation.x, currentLocation.y + delta };
+	Location square2{ currentLocation.x, currentLocation.y + delta + delta };
+	if (!_board[currentLocation.x][square1.y] && !_board[currentLocation.x][square2.y]) {
 
-					// cheking if squares king has to move through are not under attack
-					if (!isKingInDanger(king, currentLocation, square1) && !isKingInDanger(king, currentLocation, square2)) {
+		// cheking if squares king has to move through are not under attack
+		if (!isKingInDanger(king, currentLocation, square1) && !isKingInDanger(king, currentLocation, square2)) {
 
-						// choosing kingside or queenside rook
-						Figure* rook = nullptr;
-						if (delta > 0) {
-							rook = _board[currentLocation.x][BOARD_SIZE - 1];
-						}
-						else {
-							rook = _board[currentLocation.x][0];
-							// cheking if square queenside rook has to move through first is empty
-							if (_board[currentLocation.x][1]) {
-								// castling can't be performed
-								return false;
-							}
-						}
-
-						// cheking rook
-						if (rook && rook->getType() == Type::ROOK && rook->_firstMove) {
-							// castling can be performed
-							return true;
-						}
-					}
+			// choosing kingside or queenside rook
+			Figure* rook = nullptr;
+			if (delta > 0) {
+				rook = _board[currentLocation.x][BOARD_SIZE - 1];
+			}
+			else {
+				rook = _board[currentLocation.x][0];
+				// cheking if square queenside rook has to move through first is empty
+				if (_board[currentLocation.x][1]) {
+					// castling can't be performed
+					return false;
 				}
+			}
+
+			// cheking rook
+			if (rook && rook->getType() == Type::ROOK && rook->_firstMove) {
+				// castling can be performed
+				return true;
 			}
 		}
 	}
@@ -521,31 +528,36 @@ bool Core::enPassant(Figure* figureToMove, Location currentLocation, Location ne
 {
 	bool enPassantIsPossible = false;
 
-	if (figureToMove->getType() == Type::PAWN && _enPassantFigure) {
-		if (newLocation == _tempLocation) {
-			// location of the pawn, that just made two-squares move
-			Location enPassantLocation = _enPassantFigure->getLocation();
-			const int delta = currentLocation.y - enPassantLocation.y;
+	if (figureToMove->getType() != Type::PAWN || !_enPassantFigure) {
+		// it's not pawn to move or there is no pawns, that made two-square move
+		return false;
+	}
+	if (newLocation != _tempLocation) {
+		// pawn is not intended to make En passant
+		return false;
+	}
 
-			if (currentLocation.x == enPassantLocation.x && (delta == 1 || delta == -1)) {
-				// setting board as if move's been executed
-				_enemyArmy->eraseObject(_enPassantFigure);
-				_board[currentLocation.x][currentLocation.y] = nullptr;
-				_board[enPassantLocation.x][enPassantLocation.y] = nullptr;
-				_board[newLocation.x][newLocation.y] = figureToMove;
-				figureToMove->setLocation(newLocation);
+	// location of the pawn, that just made two-squares move
+	Location enPassantLocation = _enPassantFigure->getLocation();
+	const int delta = currentLocation.y - enPassantLocation.y;
 
-				// checking for "check"
-				enPassantIsPossible = !isCheck();
+	if (currentLocation.x == enPassantLocation.x && (delta == 1 || delta == -1)) {
+		// setting board as if move's been executed
+		_enemyArmy->eraseObject(_enPassantFigure);
+		_board[currentLocation.x][currentLocation.y] = nullptr;
+		_board[enPassantLocation.x][enPassantLocation.y] = nullptr;
+		_board[newLocation.x][newLocation.y] = figureToMove;
+		figureToMove->setLocation(newLocation);
 
-				// setting board to previous position
-				_enemyArmy->pushBack(_enPassantFigure);
-				_board[currentLocation.x][currentLocation.y] = figureToMove;
-				_board[enPassantLocation.x][enPassantLocation.y] = _enPassantFigure;
-				_board[newLocation.x][newLocation.y] = nullptr;
-				figureToMove->setLocation(currentLocation);
-			}
-		}
+		// checking for "check"
+		enPassantIsPossible = !isCheck();
+
+		// setting board to previous position
+		_enemyArmy->pushBack(_enPassantFigure);
+		_board[currentLocation.x][currentLocation.y] = figureToMove;
+		_board[enPassantLocation.x][enPassantLocation.y] = _enPassantFigure;
+		_board[newLocation.x][newLocation.y] = nullptr;
+		figureToMove->setLocation(currentLocation);
 	}
 
 	return enPassantIsPossible;
