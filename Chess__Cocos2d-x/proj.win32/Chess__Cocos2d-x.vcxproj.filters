@@ -54,6 +54,9 @@
     <ClCompile Include="..\Classes\Units.cpp">
       <Filter>Cpp</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\FiguresPool.cpp">
+      <Filter>Cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -96,6 +99,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Units.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FiguresPool.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,7 +7,7 @@ using namespace DEF_SETT;
 bool Figure::init()
 {
 	// initializing our figure from SpriteFrameCache
-	if (this->initWithSpriteFrameName("WK_Pas.png")) {
+	if (this->initWithSpriteFrameName("BR_Pas.png")) {
 		this->setVisible(false);
 		
 		return true;

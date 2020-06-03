@@ -20,18 +20,20 @@ Future improvements:
 #include "Specification.h"
 #include "Figure.h"
 #include "Units.h"
+#include "FiguresPool.h"
 
 using namespace DEF_SETT;
 
 class Core {
 private:
 	Core() {};
-	~Core() {};
 	Core(const Core& copy) = delete;
 	Core& operator=(const Core& copy) = delete;
 // attributes
 	// Board[SIZE][SIZE], BOARD_SIZE = 8;
 	std::vector < std::vector<Figure*>> _board;
+
+	FiguresPool* _figuresPool = nullptr;
 	
 	// sets for "White" and "Black" armies and pointers on them
 	cocos2d::Vector<Figure*> _whiteArmy = cocos2d::Vector<Figure*>(16);

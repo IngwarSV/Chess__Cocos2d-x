@@ -10,8 +10,12 @@ bool Core::init() {
 		_board.push_back(std::vector<Figure*>(BOARD_SIZE));
 	}
 	
+	// adding spriteFrames to SpriteFrameCache
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("Images.plist", "Images.png");
+
+	// initializing figures' pool 
+	_figuresPool = FiguresPool::getBarracks();
 
 	// preloading music and sounds
 	AudioEngine::preload(CHESS_CLOCK);
@@ -37,7 +41,17 @@ void Core::initialSetup()
 {
 	// Creating armies with figures 
 	//// White Army
-	_WKing = F_King::createFigure(Color::WHITE, WK_INIT_POS);
+	_WKing = _figuresPool->getFigure(Type::KING, Color::WHITE, WK_INIT_POS);
+	_whiteArmy.pushBack(_WKing);
+	_whiteArmy.pushBack(_figuresPool->getFigure(Type::QUEEN, Color::WHITE, WQ_INIT_POS));
+	_whiteArmy.pushBack(_figuresPool->getFigure(Type::BISHOP, Color::WHITE, WB_INIT_POS1));
+	_whiteArmy.pushBack(_figuresPool->getFigure(Type::BISHOP, Color::WHITE, WB_INIT_POS2));
+	_whiteArmy.pushBack(_figuresPool->getFigure(Type::KNIGHT, Color::WHITE, WN_INIT_POS1));
+	_whiteArmy.pushBack(_figuresPool->getFigure(Type::KNIGHT, Color::WHITE, WN_INIT_POS2));
+	_whiteArmy.pushBack(_figuresPool->getFigure(Type::ROOK, Color::WHITE, WR_INIT_POS1));
+	_whiteArmy.pushBack(_figuresPool->getFigure(Type::ROOK, Color::WHITE, WR_INIT_POS2));
+
+	/*_WKing = F_King::createFigure(Color::WHITE, WK_INIT_POS);
 	_whiteArmy.pushBack(_WKing);
 	_whiteArmy.pushBack(F_Queen::createFigure(Color::WHITE, WQ_INIT_POS));
 	_whiteArmy.pushBack(F_Bishop::createFigure(Color::WHITE, WB_INIT_POS1));
@@ -45,10 +59,21 @@ void Core::initialSetup()
 	_whiteArmy.pushBack(F_Knight::createFigure(Color::WHITE, WN_INIT_POS1));
 	_whiteArmy.pushBack(F_Knight::createFigure(Color::WHITE, WN_INIT_POS2));
 	_whiteArmy.pushBack(F_Rook::createFigure(Color::WHITE, WR_INIT_POS1));
-	_whiteArmy.pushBack(F_Rook::createFigure(Color::WHITE, WR_INIT_POS2));
+	_whiteArmy.pushBack(F_Rook::createFigure(Color::WHITE, WR_INIT_POS2));*/
 
 	//// Black Army
-	_BKing = F_King::createFigure(Color::BLACK, BK_INIT_POS);
+	_BKing = _figuresPool->getFigure(Type::KING, Color::BLACK, BK_INIT_POS);
+	_blackArmy.pushBack(_BKing);
+	_blackArmy.pushBack(_figuresPool->getFigure(Type::QUEEN, Color::BLACK, BQ_INIT_POS));
+	_blackArmy.pushBack(_figuresPool->getFigure(Type::BISHOP, Color::BLACK, BB_INIT_POS1));
+	_blackArmy.pushBack(_figuresPool->getFigure(Type::BISHOP, Color::BLACK, BB_INIT_POS2));
+	_blackArmy.pushBack(_figuresPool->getFigure(Type::KNIGHT, Color::BLACK, BN_INIT_POS1));
+	_blackArmy.pushBack(_figuresPool->getFigure(Type::KNIGHT, Color::BLACK, BN_INIT_POS2));
+	_blackArmy.pushBack(_figuresPool->getFigure(Type::ROOK, Color::BLACK, BR_INIT_POS1));
+	_blackArmy.pushBack(_figuresPool->getFigure(Type::ROOK, Color::BLACK, BR_INIT_POS2));
+
+
+	/*_BKing = F_King::createFigure(Color::BLACK, BK_INIT_POS);
 	_blackArmy.pushBack(_BKing);
 	_blackArmy.pushBack(F_Queen::createFigure(Color::BLACK, BQ_INIT_POS));
 	_blackArmy.pushBack(F_Bishop::createFigure(Color::BLACK, BB_INIT_POS1));
@@ -56,7 +81,7 @@ void Core::initialSetup()
 	_blackArmy.pushBack(F_Knight::createFigure(Color::BLACK, BN_INIT_POS1));
 	_blackArmy.pushBack(F_Knight::createFigure(Color::BLACK, BN_INIT_POS2));
 	_blackArmy.pushBack(F_Rook::createFigure(Color::BLACK, BR_INIT_POS1));
-	_blackArmy.pushBack(F_Rook::createFigure(Color::BLACK, BR_INIT_POS2));
+	_blackArmy.pushBack(F_Rook::createFigure(Color::BLACK, BR_INIT_POS2));*/
 
 	// Pawns
 	_pawnQuantity = PAWN_QUANTITY;
@@ -67,8 +92,8 @@ void Core::initialSetup()
 		tempWhite.y += i;
 		tempBlack.y += i;
 
-		_whiteArmy.pushBack(F_Pawn::createFigure(Color::WHITE, tempWhite));
-		_blackArmy.pushBack(F_Pawn::createFigure(Color::BLACK, tempBlack));
+		_whiteArmy.pushBack(_figuresPool->getFigure(Type::PAWN, Color::WHITE, tempWhite));
+		_blackArmy.pushBack(_figuresPool->getFigure(Type::PAWN, Color::BLACK, tempBlack));
 	}
 
 	// updating board's situation considering figures' positions
