@@ -25,6 +25,10 @@ using namespace DEF_SETT;
 
 class Core {
 private:
+	Core() {};
+	~Core() {};
+	Core(const Core& copy) = delete;
+	Core& operator=(const Core& copy) = delete;
 // attributes
 	// Board[SIZE][SIZE], BOARD_SIZE = 8;
 	std::vector < std::vector<Figure*>> _board;
@@ -84,6 +88,7 @@ private:
 	std::string getMoveString(Location currentLocation, Location newLocation);
 	
 public:
+	
 // attributes
 	// storing testsResults
 	std::vector<std::string> _testsResults;

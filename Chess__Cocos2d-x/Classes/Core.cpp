@@ -36,7 +36,6 @@ bool Core::init() {
 void Core::initialSetup()
 {
 	// Creating armies with figures 
-
 	//// White Army
 	_WKing = F_King::createFigure(Color::WHITE, WK_INIT_POS);
 	_whiteArmy.pushBack(_WKing);
