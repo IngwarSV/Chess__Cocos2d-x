@@ -16,23 +16,25 @@ FiguresPool* FiguresPool::getBarracks()
 bool FiguresPool::init()
 {
 	// creating full set of figures
-	_barracks.pushBack(createFigure(Type::KING, Color::WHITE, WK_INIT_POS));
-	_barracks.pushBack(createFigure(Type::QUEEN, Color::WHITE, WQ_INIT_POS));
-	_barracks.pushBack(createFigure(Type::BISHOP, Color::WHITE, WB_INIT_POS1));
-	_barracks.pushBack(createFigure(Type::BISHOP, Color::WHITE, WB_INIT_POS2));
-	_barracks.pushBack(createFigure(Type::KNIGHT, Color::WHITE, WN_INIT_POS1));
-	_barracks.pushBack(createFigure(Type::KNIGHT, Color::WHITE, WN_INIT_POS2));
-	_barracks.pushBack(createFigure(Type::ROOK, Color::WHITE, WR_INIT_POS1));
-	_barracks.pushBack(createFigure(Type::ROOK, Color::WHITE, WR_INIT_POS2));
+	_barracks.pushBack(createFigure(Type::KING, Color::WHITE));
+	_barracks.pushBack(createFigure(Type::QUEEN, Color::WHITE));
+	_barracks.pushBack(createFigure(Type::QUEEN, Color::WHITE)); // additional queen for promotion
+	_barracks.pushBack(createFigure(Type::BISHOP, Color::WHITE));
+	_barracks.pushBack(createFigure(Type::BISHOP, Color::WHITE));
+	_barracks.pushBack(createFigure(Type::KNIGHT, Color::WHITE));
+	_barracks.pushBack(createFigure(Type::KNIGHT, Color::WHITE));
+	_barracks.pushBack(createFigure(Type::ROOK, Color::WHITE));
+	_barracks.pushBack(createFigure(Type::ROOK, Color::WHITE));
 	
-	_barracks.pushBack(createFigure(Type::KING, Color::BLACK, BK_INIT_POS));
-	_barracks.pushBack(createFigure(Type::QUEEN, Color::BLACK, BQ_INIT_POS));
-	_barracks.pushBack(createFigure(Type::BISHOP, Color::BLACK, BB_INIT_POS1));
-	_barracks.pushBack(createFigure(Type::BISHOP, Color::BLACK, BB_INIT_POS2));
-	_barracks.pushBack(createFigure(Type::KNIGHT, Color::BLACK, BN_INIT_POS1));
-	_barracks.pushBack(createFigure(Type::KNIGHT, Color::BLACK, BN_INIT_POS2));
-	_barracks.pushBack(createFigure(Type::ROOK, Color::BLACK, BR_INIT_POS1));
-	_barracks.pushBack(createFigure(Type::ROOK, Color::BLACK, BR_INIT_POS2));
+	_barracks.pushBack(createFigure(Type::KING, Color::BLACK));
+	_barracks.pushBack(createFigure(Type::QUEEN, Color::BLACK));
+	_barracks.pushBack(createFigure(Type::QUEEN, Color::BLACK)); // additional queen for promotion
+	_barracks.pushBack(createFigure(Type::BISHOP, Color::BLACK));
+	_barracks.pushBack(createFigure(Type::BISHOP, Color::BLACK));
+	_barracks.pushBack(createFigure(Type::KNIGHT, Color::BLACK));
+	_barracks.pushBack(createFigure(Type::KNIGHT, Color::BLACK));
+	_barracks.pushBack(createFigure(Type::ROOK, Color::BLACK));
+	_barracks.pushBack(createFigure(Type::ROOK, Color::BLACK));
 
 	for (int i = 0; i < BOARD_SIZE; ++i) {
 		_barracks.pushBack(createFigure(Type::PAWN, Color::WHITE));
@@ -97,5 +99,6 @@ Figure* FiguresPool::getFigure(Type figureType, Color figureColor, Location loca
 
 void FiguresPool::putFigure(Figure* figure)
 {
+	figure->_firstMove = true;
 	_barracks.pushBack(figure);
 }

@@ -1,13 +1,14 @@
 //thanks to Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
 
 #pragma once
-/* Core is the main logic class (singleton, is avaible to all scenes), which includes main game data 
+/* Core is the main logic class (singleton, is available to all scenes), which includes main game data 
 and carry out game logic. Main element is board[8][8] - std::vector < std::vector<Figure*>> _board, 
-where all calculating are done. Square contains Figure*, which inherits from cocos2d::Sprite, or 
-nullptr if it is empty. 
+where all calculating are done. Square contains Figure*, which inherit from cocos2d::Sprite, or 
+nullptr, if it is empty. 
+
 Future improvements:
 1. Core is too big and needs to be divided to few more little classes.
-2. It would be better to store figures in  pull but not delete them
+2. It would be better to store figures in pull but not create / delete them - DONE
 */
 #include "cocos2d.h"
 #include "audio/include/AudioEngine.h"
@@ -34,6 +35,8 @@ private:
 	std::vector < std::vector<Figure*>> _board;
 
 	FiguresPool* _figuresPool = nullptr;
+
+	//AudioController* _audioController = nullptr;
 	
 	// sets for "White" and "Black" armies and pointers on them
 	cocos2d::Vector<Figure*> _whiteArmy = cocos2d::Vector<Figure*>(16);
